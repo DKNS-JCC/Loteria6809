@@ -22,7 +22,7 @@ m_decimos:      .ascii  "\33[32m=========DECIMOS==========\n"
                 .asciz  "\33[35m3. Volver\n"
 
 
-m_sorteo:       .ascii  "\33[33m=========SORTEO==========\n"
+m_sorteo:       .ascii  "\33[33m=========SORTEO========== \n"
                 .ascii  "\33[34m1. Ver Resultados\n"
                 .ascii  "\33[35m2. Introducir Resultados\n"
                 .asciz  "\33[36m3. Volver\n"
