@@ -5,7 +5,7 @@
                     .org   0x100
 
 primer.premio:
-            .asciz "89603"
+             .asciz "89603"
 segundo.premio:
             .asciz "72289"
 tercero.premio:
