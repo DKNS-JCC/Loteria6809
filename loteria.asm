@@ -9,36 +9,36 @@ pantalla 	.equ 	0xFF00
          			; Fin definicion de constantes
 
 			; Inicio declaración de variables
-menu_p:         .ascii "=====LOTERIA 6809=====\n"
-                .ascii  "1. DECIMOS\n"
-                .ascii  "2. SORTEO\n"
-                .ascii  "3. COMPROBAR\n"
-                .asciz  "4. SALIR\n"
+menu_p:         .ascii "\33[31m=====LOTERIA 6809=====\n"
+                .ascii  "\33[32m1. DECIMOS\n"
+                .ascii  "\33[33m2. SORTEO\n"
+                .ascii  "\33[34m3. COMPROBAR\n"
+                .asciz  "\33[35m4. SALIR\n"
 
 
-m_decimos:      .ascii  "=========DECIMOS==========\n"
-                .ascii  "1. Ver\n"
-                .ascii  "2. Introducir resultados\n"
-                .asciz  "3. Volver\n"
+m_decimos:      .ascii  "\33[32m=========DECIMOS==========\n"
+                .ascii  "\33[33m1. Ver\n"
+                .ascii  "\33[34m2. Introducir resultados\n"
+                .asciz  "\33[35m3. Volver\n"
 
 
-m_sorteo:       .ascii  "=========SORTEO==========\n"
-                .ascii  "1. Ver Resultados\n"
-                .ascii  "2. Introducir Resultados\n"
-                .asciz  "3. Volver\n"
+m_sorteo:       .ascii  "\33[33m=========SORTEO========== \n"
+                .ascii  "\33[34m1. Ver Resultados\n"
+                .ascii  "\33[35m2. Introducir Resultados\n"
+                .asciz  "\33[36m3. Volver\n"
 
-m_sorteo2:     .ascii  "=========INTRODUCIR RESULTADOS==========\n"
-                .ascii  "1. 3 primeros premios\n"
-                .ascii  "2. Terminaciones 4 cifras\n"
-                .ascii  "3. Terminaciones 3 cifras\n"
-                .ascii  "4. Terminaciones 2 cifras\n"
-                .ascii  "5. Reintegros\n"
-                .asciz  "6. Volver\n"
+m_sorteo2:      .ascii  "\33[35m=========INTRODUCIR RESULTADOS==========\n"
+                .ascii  "\33[31m1. 3 Primeros premios\n"
+                .ascii  "\33[32m2. Terminaciones 4 cifras\n"
+                .ascii  "\33[33m3. Terminaciones 3 cifras\n"
+                .ascii  "\33[34m4. Terminaciones 2 cifras\n"
+                .ascii  "\33[35m5. Reintegros\n"
+                .asciz  "\33[36m6. Volver\n"
 
 
-m_comprobar:      .asciz  "=========COMPROBAR==========\n"
+m_comprobar:      .asciz  "\31[34m=========COMPROBAR==========\n"
 
-error_switch:     .asciz  "Opcion incorrecta, intentelo de nuevo.\n"
+error_switch:     .asciz  "\33[31mOpcion incorrecta, intentelo de nuevo.\n"
 limpia_pantalla:  .asciz  "\033[2J"
 			; Fin declaración de variables
 	        	
