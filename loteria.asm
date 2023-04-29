@@ -10,6 +10,40 @@ pantalla 	.equ 	0xFF00
             
 
 			; Inicio declaración de variables
+primer.premio:
+             .asciz "89603"
+segundo.premio:
+            .asciz "72289"
+tercero.premio:
+            .asciz "18918"
+cuatro.cifras:
+            .ascii "06338"
+            .asciz "08173"
+tres.cifras:
+            .ascii "00224"
+            .ascii "00231"
+            .ascii "00266"
+            .ascii "00278"
+            .ascii "00300"
+            .ascii "00387"
+            .ascii "00457"
+            .ascii "00527"
+            .ascii "00538"
+            .ascii "00550"
+            .ascii "00726"
+            .ascii "00760"
+            .ascii "00888"
+            .asciz "00928"
+dos.cifras:
+            .ascii "00011"
+            .ascii "00018"
+            .ascii "00024"
+            .ascii "00029"
+            .asciz "00041"
+reintegro:
+            .ascii "00003"
+            .ascii "00004"
+            .asciz "00009"
 
 menu_p:         .ascii "\33[31m=====LOTERIA 6809=====\n"
                 .ascii  "\33[32m1. DECIMOS\n"
@@ -139,30 +173,40 @@ sorteo_introducir:
     cmpa #'5 ; 5. Reintegros
     beq sorteo_introducir_reintegros; Si es 5, va a sorteo_introducir_5
     cmpa #'6 ; 6. Volver
-    beq sorteo;    ; Si es 6, vuelve al menu principal
+    beq sorteo;    ; Si es 6, vuelve al menu sorteo
     ldx #error_switch
-    jsr imprime_cadena 
+    jsr imprime_cadena
     jmp sorteo_introducir
 
 sorteo_introducir_3premios:
+    ldx #primer.premio
+    jsr imprime_cadena
     ;;llamar a la funcion que introduce los 3 premios
-    jmp acabar
+    jmp programa
 
 sorteo_introducir_4cifras:
+    ldx #cuatro.cifras
+    jsr imprime_cadena
     ;;llamar a la funcion que introduce las terminaciones de 4 cifras
-    jmp acabar
+    jmp programa
 
 sorteo_introducir_3cifras:
+    ldx #tres.cifras
+    jsr imprime_cadena
     ;;llamar a la funcion que introduce las terminaciones de 3 cifras
-    jmp acabar
+    jmp programa
 
 sorteo_introducir_2cifras:
+    ldx #dos.cifras
+    jsr imprime_cadena
     ;;llamar a la funcion que introduce las terminaciones de 2 cifras
-    jmp acabar
+    jmp programa
 
 sorteo_introducir_reintegros:
+    ldx #reintegro
+    jsr imprime_cadena
     ;;llamar a la funcion que introduce los reintegros
-    jmp acabar
+    jmp programa
 
 	.org 	0xFFFE	; Vector de RESET
 	.word 	programa
