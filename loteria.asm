@@ -1,14 +1,16 @@
             .module loteria6809
             .area PROG (ABS)
             .org 0x100
-            .globl programa
+
          			; Inicio definicion de constantes
 fin     	.equ 	0xFF01
 teclado		.equ	0xFF02
 pantalla 	.equ 	0xFF00
          			; Fin definicion de constantes
+            
 
 			; Inicio declaración de variables
+
 menu_p:         .ascii "\33[31m=====LOTERIA 6809=====\n"
                 .ascii  "\33[32m1. DECIMOS\n"
                 .ascii  "\33[33m2. SORTEO\n"
@@ -40,16 +42,21 @@ m_comprobar:      .asciz  "\31[34m=========COMPROBAR==========\n"
 
 error_switch:     .asciz  "\33[31mOpcion incorrecta, intentelo de nuevo.\n"
 limpia_pantalla:  .asciz  "\033[2J"
+
+            .globl programa
+            .globl imprime_cadena
 			; Fin declaración de variables
 	        	
 			; Comienzo del programa
 programa:
 
+    lds #0xFF00
+
     ldx #menu_p
-    lbsr imprime_cadena
+    jsr imprime_cadena
     lda teclado
     ldx #limpia_pantalla
-    lbsr imprime_cadena 
+    jsr imprime_cadena 
     cmpa #'1 ; 1. Decimos
     beq decimos; Si es 1, va a decimos
     cmpa #'2 ; 2. Sorteo
@@ -61,7 +68,7 @@ programa:
 
 mensaje_error:
     ldx #error_switch
-    lbsr imprime_cadena
+    jsr imprime_cadena
     jmp programa
 
 acabar: 	clra
@@ -69,15 +76,15 @@ acabar: 	clra
 
 comprobar:     
     ldx #m_comprobar
-    lbsr imprime_cadena
+    jsr imprime_cadena
     jmp acabar
 
 decimos:
     ldx #m_decimos
-    lbsr imprime_cadena
+    jsr imprime_cadena
     lda teclado
     ldx #limpia_pantalla
-    lbsr imprime_cadena 
+    jsr imprime_cadena 
     cmpa #'1 ; 1. Ver
     beq decimos_ver; Si es 1, va a decimos_ver
     cmpa #'2 ; 2. Introducir resultados
@@ -85,7 +92,7 @@ decimos:
     cmpa #'3 ; 3. Volver
     beq programa    ; Si es 3, vuelve al menu principal
     ldx #error_switch
-    lbsr imprime_cadena
+    jsr imprime_cadena
     jmp decimos
 
 decimos_ver:
@@ -97,10 +104,10 @@ decimos_introducir:
     jmp acabar
 sorteo:
     ldx #m_sorteo
-    lbsr imprime_cadena
+    jsr imprime_cadena
     lda teclado
     ldx #limpia_pantalla
-    lbsr imprime_cadena 
+    jsr imprime_cadena 
     cmpa #'1 ; 1. Ver resultados
     beq sorteo_ver; Si es 1, va a sorteo_ver
     cmpa #'2 ; 2. Introducir resultados
@@ -108,7 +115,7 @@ sorteo:
     cmpa #'3 ; 3. Volver
     beq programa    ; Si es 3, vuelve al menu principal
     ldx #error_switch
-    lbsr imprime_cadena
+    jsr imprime_cadena
     jmp sorteo
 
 sorteo_ver:
@@ -117,10 +124,10 @@ sorteo_ver:
 
 sorteo_introducir:
     ldx #m_sorteo2
-    lbsr imprime_cadena
+    jsr imprime_cadena
     lda teclado
     ldx #limpia_pantalla
-    lbsr imprime_cadena 
+    jsr imprime_cadena 
     cmpa #'1 ; 1. 3 primeros premios
     beq sorteo_introducir_3premios; Si es 1, va a sorteo_introducir_3premios
     cmpa #'2 ; 2. Terminaciones 4 cifras
@@ -134,7 +141,7 @@ sorteo_introducir:
     cmpa #'6 ; 6. Volver
     beq sorteo;    ; Si es 6, vuelve al menu principal
     ldx #error_switch
-    lbsr imprime_cadena 
+    jsr imprime_cadena 
     jmp sorteo_introducir
 
 sorteo_introducir_3premios:
@@ -156,28 +163,6 @@ sorteo_introducir_2cifras:
 sorteo_introducir_reintegros:
     ;;llamar a la funcion que introduce los reintegros
     jmp acabar
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; imprime_cadena                                                   ;
-; saca por la pantalla la cadena acabada en '\0 apuntada por X     ;
-;                                                                  ;       
-; Entrada: X-direcciOn de comienzo de la cadena                    ;
-; Salida: ninguna                                                  ;   
-; Registros afectados: X, CC.                                      ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-imprime_cadena:
-        pshs    a               ; Guarda el valor de A en la pila
-sgte:              
-        lda     ,x+             ; Carga el primer caracter de la cadena
-        beq ret_imprime_cadena  ; Si es 0, sale a ret_imprime_cadena
-        sta     pantalla        ; Si no, lo imprime en pantalla
-        jmp     sgte            ; y vuelve a sgte
-ret_imprime_cadena:
-        puls    a               ; Recupera el valor de A
-        rts                     ; y sale de la subrutina equivalente a puls pc (return)
-
-
 
 	.org 	0xFFFE	; Vector de RESET
 	.word 	programa
