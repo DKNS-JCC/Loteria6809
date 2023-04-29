@@ -1,8 +1,5 @@
         .module numeros_sorteo
-        pantalla    .equ   0xFF00
-        teclado     .equ   0xFF02
-        consola     .equ   0xFF01
-                    .org   0x100
+        .globl numero
 
 primer.premio:
              .asciz "89603"
@@ -14,29 +11,29 @@ cuatro.cifras:
             .asciz "06338"
             .asciz "08173"
 tres.cifras:
-            .asciz "00224"
-            .asciz "00231"
-            .asciz "00266"
-            .asciz "00278"
-            .asciz "00300"
-            .asciz "00387"
-            .asciz "00457"
-            .asciz "00527"
-            .asciz "00538"
-            .asciz "00550"
-            .asciz "00726"
-            .asciz "00760"
-            .asciz "00888"
+            .ascii "00224"
+            .ascii "00231"
+            .ascii "00266"
+            .ascii "00278"
+            .ascii "00300"
+            .ascii "00387"
+            .ascii "00457"
+            .ascii "00527"
+            .ascii "00538"
+            .ascii "00550"
+            .ascii "00726"
+            .ascii "00760"
+            .ascii "00888"
             .asciz "00928"
 dos.cifras:
-            .asciz "00011"
-            .asciz "00018"
-            .asciz "00024"
-            .asciz "00029"
+            .ascii "00011"
+            .ascii "00018"
+            .ascii "00024"
+            .ascii "00029"
             .asciz "00041"
 reintegro:
-            .asciz "00003"
-            .asciz "00004"
-            .asciz "00009"
+            .ascii "00003"
+            .ascii "00004"
+            .ascii "00009"
 
         
