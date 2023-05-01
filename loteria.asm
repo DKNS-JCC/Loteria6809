@@ -79,7 +79,8 @@ limpia_pantalla:  .asciz  "\033[2J"
 
             .globl programa
             .globl imprime_cadena
-			; Fin declaración de variables
+            ;.globl ver_decimos
+            			; Fin declaración de variables
 	        	
 			; Comienzo del programa
 programa:
@@ -120,22 +121,15 @@ decimos:
     ldx #limpia_pantalla
     jsr imprime_cadena 
     cmpa #'1 ; 1. Ver
-    beq decimos_ver; Si es 1, va a decimos_ver
+    ;beq ver_decimos; Si es 1, va a decimos_ver
     cmpa #'2 ; 2. Introducir resultados
-    beq decimos_introducir; Si es 2, va a decimos_introducir
+    beq decimos; CAMBIAR
     cmpa #'3 ; 3. Volver
     beq programa    ; Si es 3, vuelve al menu principal
     ldx #error_switch
     jsr imprime_cadena
     jmp decimos
 
-decimos_ver:
-    ;;llamar a la funcion que imprime los decimos
-    jmp acabar
-
-decimos_introducir:
-    ;;llamar a la funcion que introduce los decimos
-    jmp acabar
 sorteo:
     ldx #m_sorteo
     jsr imprime_cadena
