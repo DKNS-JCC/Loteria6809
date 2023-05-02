@@ -10,40 +10,7 @@ pantalla 	.equ 	0xFF00
             
 
 			; Inicio declaración de variables
-primer.premio:
-             .asciz "89603"
-segundo.premio:
-            .asciz "72289"
-tercero.premio:
-            .asciz "18918"
-cuatro.cifras:
-            .ascii "06338"
-            .asciz "08173"
-tres.cifras:
-            .ascii "00224"
-            .ascii "00231"
-            .ascii "00266"
-            .ascii "00278"
-            .ascii "00300"
-            .ascii "00387"
-            .ascii "00457"
-            .ascii "00527"
-            .ascii "00538"
-            .ascii "00550"
-            .ascii "00726"
-            .ascii "00760"
-            .ascii "00888"
-            .asciz "00928"
-dos.cifras:
-            .ascii "00011"
-            .ascii "00018"
-            .ascii "00024"
-            .ascii "00029"
-            .asciz "00041"
-reintegro:
-            .ascii "00003"
-            .ascii "00004"
-            .asciz "00009"
+
 
 menu_p:         .ascii "\33[31m=====LOTERIA 6809=====\n"
                 .ascii  "\33[32m1. DECIMOS\n"
@@ -79,7 +46,7 @@ limpia_pantalla:  .asciz  "\033[2J"
 
             .globl programa
             .globl imprime_cadena
-            ;.globl ver_decimos
+            .globl ver_decimos
             			; Fin declaración de variables
 	        	
 ; Comienzo del programa
@@ -173,31 +140,31 @@ sorteo_introducir:
     jmp sorteo_introducir
 
 sorteo_introducir_3premios:
-    ldx #primer.premio
+    ldx #m_sorteo2
     jsr imprime_cadena
     ;;llamar a la funcion que introduce los 3 premios
     jmp programa
 
 sorteo_introducir_4cifras:
-    ldx #cuatro.cifras
+    ldx #m_sorteo2
     jsr imprime_cadena
     ;;llamar a la funcion que introduce las terminaciones de 4 cifras
     jmp programa
 
 sorteo_introducir_3cifras:
-    ldx #tres.cifras
+    ldx #m_sorteo2
     jsr imprime_cadena
     ;;llamar a la funcion que introduce las terminaciones de 3 cifras
     jmp programa
 
 sorteo_introducir_2cifras:
-    ldx #dos.cifras
+    ldx #m_sorteo2
     jsr imprime_cadena
     ;;llamar a la funcion que introduce las terminaciones de 2 cifras
     jmp programa
 
 sorteo_introducir_reintegros:
-    ldx #reintegro
+    ldx #m_sorteo2
     jsr imprime_cadena
     ;;llamar a la funcion que introduce los reintegros
     jmp programa
