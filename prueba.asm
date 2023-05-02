@@ -1,5 +1,5 @@
             .module prueba
-            .area PROG (REL)
+            .area PROG (ABS)
             .org 0x100
 
          			; Inicio definicion de constantes
@@ -10,11 +10,14 @@ pantalla 	.equ 	0xFF00
 
                     ; Inicio definicion de variables
                     .globl ver_decimos
+                    .globl imprime_cadena
+                    .globl tres.cifras
                     ;.globl imprime_cadena
          			; Fin definicion de variables
 
 programa:
-    jsr ver_decimos
+    jsr #tres.cifras
+    jsr imprime_cadena
     
 
     .org 	0xFFFE	; Vector de RESET
