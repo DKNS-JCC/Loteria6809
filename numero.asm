@@ -1,5 +1,11 @@
         .module numeros_sorteo
-        .globl numero
+        .globl primer.premio
+        .globl segundo.premio
+        .globl tercero.premio
+        .globl cuatro.cifras
+        .globl tres.cifras
+        .globl dos.cifras
+        .globl reintegro
 
 primer.premio:
              .asciz "89603"
