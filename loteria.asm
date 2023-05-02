@@ -42,7 +42,7 @@ error_switch:     .asciz  "Opcion incorrecta, intentelo de nuevo.\n"
 limpia_pantalla:  .asciz  "\033[2J"
 			; Fin declaración de variables
 	        	
-			; Comienzo del programa
+; Comienzo del programa
 programa:
 
     ldx #menu_p
