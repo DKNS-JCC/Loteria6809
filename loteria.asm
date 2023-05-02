@@ -82,7 +82,7 @@ limpia_pantalla:  .asciz  "\033[2J"
             ;.globl ver_decimos
             			; Fin declaración de variables
 	        	
-			; Comienzo del programa
+; Comienzo del programa
 programa:
 
     lds #0xFF00
