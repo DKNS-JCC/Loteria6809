@@ -14,10 +14,9 @@ premios:
                 .ascii "Terminacion de 1 cifra (reintegro) equivale a 1 punto\n"
 
 acumulador:     .word 0
-                .globl  main
-                .globl  comparacion_primero
-                .globl  comparacion_segundo
-                .globl  comparacion_tercero
+                .globl  comparacion_5cifras
+                .globl  comparacion_4cifras
+                .globl  comparacion_3cifras  
 
 
 comparacion_5cifras:
