@@ -1,5 +1,4 @@
             .module loteria6809
-            .area PROG (ABS)
             .org 0x100
 
          			; Inicio definicion de constantes
@@ -138,36 +137,6 @@ sorteo_introducir:
     ldx #error_switch
     jsr imprime_cadena
     jmp sorteo_introducir
-
-sorteo_introducir_3premios:
-    ldx #m_sorteo2
-    jsr imprime_cadena
-    ;;llamar a la funcion que introduce los 3 premios
-    jmp programa
-
-sorteo_introducir_4cifras:
-    ldx #m_sorteo2
-    jsr imprime_cadena
-    ;;llamar a la funcion que introduce las terminaciones de 4 cifras
-    jmp programa
-
-sorteo_introducir_3cifras:
-    ldx #m_sorteo2
-    jsr imprime_cadena
-    ;;llamar a la funcion que introduce las terminaciones de 3 cifras
-    jmp programa
-
-sorteo_introducir_2cifras:
-    ldx #m_sorteo2
-    jsr imprime_cadena
-    ;;llamar a la funcion que introduce las terminaciones de 2 cifras
-    jmp programa
-
-sorteo_introducir_reintegros:
-    ldx #m_sorteo2
-    jsr imprime_cadena
-    ;;llamar a la funcion que introduce los reintegros
-    jmp programa
 
 	.org 	0xFFFE	; Vector de RESET
 	.word 	programa
