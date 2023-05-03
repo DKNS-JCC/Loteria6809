@@ -1,5 +1,5 @@
             .module loteria6809
-            .org 0x100
+            
 
          			; Inicio definicion de constantes
 fin     	.equ 	0xFF01
@@ -45,7 +45,6 @@ limpia_pantalla:  .asciz  "\033[2J"
 
             .globl programa
             .globl imprime_cadena
-            .globl ver_decimos
             			; Fin declaración de variables
 	        	
 ; Comienzo del programa
@@ -123,20 +122,21 @@ sorteo_introducir:
     ldx #limpia_pantalla
     jsr imprime_cadena 
     cmpa #'1 ; 1. 3 primeros premios
-    beq sorteo_introducir_3premios; Si es 1, va a sorteo_introducir_3premios
+    beq sorteo_ver; Si es 1, va a sorteo_introducir_3premios
     cmpa #'2 ; 2. Terminaciones 4 cifras
-    beq sorteo_introducir_4cifras; Si es 2, va a sorteo_introducir_2
+    beq sorteo_ver; Si es 2, va a sorteo_introducir_2
     cmpa #'3 ; 3. Terminaciones 3 cifras
-    beq sorteo_introducir_3cifras; Si es 3, va a sorteo_introducir_3
+    beq sorteo_ver; Si es 3, va a sorteo_introducir_3
     cmpa #'4 ; 4. Terminaciones 2 cifras
-    beq sorteo_introducir_2cifras; Si es 4, va a sorteo_introducir_4
+    beq sorteo_ver; Si es 4, va a sorteo_introducir_4
     cmpa #'5 ; 5. Reintegros
-    beq sorteo_introducir_reintegros; Si es 5, va a sorteo_introducir_5
+    beq sorteo_ver; Si es 5, va a sorteo_introducir_5
     cmpa #'6 ; 6. Volver
     beq sorteo;    ; Si es 6, vuelve al menu sorteo
     ldx #error_switch
     jsr imprime_cadena
     jmp sorteo_introducir
 
+    .area FIJA(ABS)
 	.org 	0xFFFE	; Vector de RESET
 	.word 	programa

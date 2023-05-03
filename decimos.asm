@@ -20,7 +20,7 @@ decimos:    .asciz  "65401"
 decimos_MAX: .byte 10
 decimos_NUM: .byte 10
 
-ver:     .ascii "Los decimos actuales son...\n"
+ver:     .asciz "Los decimos actuales son...\n"
 
 
                 .globl ver_decimos
@@ -28,17 +28,8 @@ ver:     .ascii "Los decimos actuales son...\n"
 
 ver_decimos:
     ldx #ver
-    ;jsr imprime_cadena
-    lda #0
-    jsr bucle
+    jsr imprime_cadena
+    rts
 
-bucle: 
-    cmpa decimos_NUM
-    beq fin
-
-    ldx decimos
-    ;jsr imprime_cadena
-    inca
-    jsr bucle
 
 
