@@ -5,13 +5,13 @@
                     .include "manejo_cadenas.asm"
 
 premios:
-                .ascii "Primer premio de 5 cifras equivale a 1000 puntos\n"
-                .ascii "Segundo premio de 5 cifras equivale a 500 puntos\n"
-                .ascii "Tercer premio de 5 cifras equivale a 200 puntos\n"
-                .ascii "Terminacion de 4 cifras equivale a 50 puntos\n"
-                .ascii "Terminacion de 3 cifras equivale a 10 puntos\n"
-                .ascii "Terminacion de 2 cifras equivale a 5 puntos\n"
-                .ascii "Terminacion de 1 cifra (reintegro) equivale a 1 punto\n"
+                .asciz "Primer premio de 5 cifras equivale a 1000 puntos\n"
+                .asciz "Segundo premio de 5 cifras equivale a 500 puntos\n"
+                .asciz "Tercer premio de 5 cifras equivale a 200 puntos\n"
+                .asciz "Terminacion de 4 cifras equivale a 50 puntos\n"
+                .asciz "Terminacion de 3 cifras equivale a 10 puntos\n"
+                .asciz "Terminacion de 2 cifras equivale a 5 puntos\n"
+                .asciz "Terminacion de 1 cifra (reintegro) equivale a 1 punto\n"
 
 acumulador:     .word 0
                 .globl  main
