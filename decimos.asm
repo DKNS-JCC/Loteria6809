@@ -24,7 +24,7 @@ ver:     .ascii "Los decimos actuales son...\n"
 
 
                 .globl ver_decimos
-                ;.globl imprime_cadena
+                .globl imprime_cadena
 
 ver_decimos:
     ldx #ver
