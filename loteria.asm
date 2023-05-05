@@ -7,6 +7,11 @@ teclado		.equ	0xFF02
 pantalla 	.equ 	0xFF00
          			; Fin definicion de constantes
             
+            .globl programa
+            .globl imprime_cadena
+            .globl decimos
+            .globl sorteo
+            .globl limpia_pantalla
 
 			; Inicio declaración de variables
 
@@ -18,10 +23,7 @@ menu_p:         .ascii "\33[31m=====LOTERIA 6809=====\n"
                 .asciz  "\33[35m4. SALIR\n"
 
 
-m_decimos:      .ascii  "\33[32m=========DECIMOS==========\n"
-                .ascii  "\33[33m1. Ver\n"
-                .ascii  "\33[34m2. Introducir resultados\n"
-                .asciz  "\33[35m3. Volver\n"
+
 
 
 m_sorteo:       .ascii  "\33[33m=========SORTEO========== \n"
@@ -40,17 +42,14 @@ m_sorteo2:      .ascii  "\33[35m=========INTRODUCIR RESULTADOS==========\n"
 
 m_comprobar:      .asciz  "\31[34m=========COMPROBAR==========\n"
 
-error_switch:     .asciz  "\33[31mOpcion incorrecta, intentelo de nuevo.\n"
-limpia_pantalla:  .asciz  "\033[2J"
 
-            .globl programa
-            .globl imprime_cadena
+
+
+
             			; Fin declaración de variables
 	        	
 ; Comienzo del programa
 programa:
-
-    lds #0xFF00
 
     ldx #menu_p
     jsr imprime_cadena
@@ -58,9 +57,9 @@ programa:
     ldx #limpia_pantalla
     jsr imprime_cadena 
     cmpa #'1 ; 1. Decimos
-    beq decimos; Si es 1, va a decimos
+    beq decimos_j; Si es 1, va a decimos
     cmpa #'2 ; 2. Sorteo
-    beq sorteo; Si es 2, va a sorteo
+    beq sorteo_j; Si es 2, va a sorteo
     cmpa #'3 ; 3. Comprobar
     beq comprobar ; Si es 3, va a comprobar
     cmpa #'4 ; 4. Salir
@@ -69,7 +68,13 @@ programa:
 mensaje_error:
     ldx #error_switch
     jsr imprime_cadena
-    jmp programa
+    bra programa
+
+decimos_j:
+    jsr decimos
+    
+sorteo_j:
+    jsr sorteo
 
 acabar: 	clra
 	sta 	fin
@@ -77,65 +82,8 @@ acabar: 	clra
 comprobar:     
     ldx #m_comprobar
     jsr imprime_cadena
-    jmp acabar
+    bra acabar
 
-decimos:
-    ldx #m_decimos
-    jsr imprime_cadena
-    lda teclado
-    ldx #limpia_pantalla
-    jsr imprime_cadena 
-    cmpa #'1 ; 1. Ver
-    ;beq ver_decimos; Si es 1, va a decimos_ver
-    cmpa #'2 ; 2. Introducir resultados
-    beq decimos; CAMBIAR
-    cmpa #'3 ; 3. Volver
-    beq programa    ; Si es 3, vuelve al menu principal
-    ldx #error_switch
-    jsr imprime_cadena
-    jmp decimos
-
-sorteo:
-    ldx #m_sorteo
-    jsr imprime_cadena
-    lda teclado
-    ldx #limpia_pantalla
-    jsr imprime_cadena 
-    cmpa #'1 ; 1. Ver resultados
-    beq sorteo_ver; Si es 1, va a sorteo_ver
-    cmpa #'2 ; 2. Introducir resultados
-    beq sorteo_introducir; Si es 2, va a sorteo_introducir
-    cmpa #'3 ; 3. Volver
-    beq programa    ; Si es 3, vuelve al menu principal
-    ldx #error_switch
-    jsr imprime_cadena
-    jmp sorteo
-
-sorteo_ver:
-    ;;llamar a la funcion que imprime los resultados
-    jmp acabar
-
-sorteo_introducir:
-    ldx #m_sorteo2
-    jsr imprime_cadena
-    lda teclado
-    ldx #limpia_pantalla
-    jsr imprime_cadena 
-    cmpa #'1 ; 1. 3 primeros premios
-    beq sorteo_ver; Si es 1, va a sorteo_introducir_3premios
-    cmpa #'2 ; 2. Terminaciones 4 cifras
-    beq sorteo_ver; Si es 2, va a sorteo_introducir_2
-    cmpa #'3 ; 3. Terminaciones 3 cifras
-    beq sorteo_ver; Si es 3, va a sorteo_introducir_3
-    cmpa #'4 ; 4. Terminaciones 2 cifras
-    beq sorteo_ver; Si es 4, va a sorteo_introducir_4
-    cmpa #'5 ; 5. Reintegros
-    beq sorteo_ver; Si es 5, va a sorteo_introducir_5
-    cmpa #'6 ; 6. Volver
-    beq sorteo;    ; Si es 6, vuelve al menu sorteo
-    ldx #error_switch
-    jsr imprime_cadena
-    jmp sorteo_introducir
 
     .area FIJA(ABS)
 	.org 	0xFFFE	; Vector de RESET

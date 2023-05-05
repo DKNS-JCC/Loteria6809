@@ -5,6 +5,12 @@ teclado		.equ	0xFF02
 pantalla 	.equ 	0xFF00
 
                 .globl imprime_cadena
+                .globl limpia_pantalla
+                .globl error_switch
+
+limpia_pantalla:  .asciz  "\033[2J"
+
+error_switch:     .asciz  "\33[31mOpcion incorrecta, intentelo de nuevo.\n"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; imprime_cadena                                                   ;
