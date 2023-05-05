@@ -48,3 +48,8 @@ else3:
         jsr comparacion_4cifras
 
 comparacion_4cifras:
+        leay    #cuatro.cifras,+1
+        cmps    y
+        bne     
+        ldx     #cuatro_cifras
+        jsr     imprime_cadena
