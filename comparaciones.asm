@@ -19,7 +19,6 @@ puntuaje:     .word 0
                 .globl  comparacion_2cifras
                 .globl  comparacion_reintegro
 
-
 comparacion_5cifras:
         pshs    a
         lda     puntuaje
