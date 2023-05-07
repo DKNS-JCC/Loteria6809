@@ -21,12 +21,12 @@ pantalla 	.equ 	0xFF00
 
 
 
-m_sorteo:       .ascii  "\33[33m=========SORTEO========== \n"
+m_sorteo:       .ascii  "\n\33[33m=========SORTEO========== \n"
                 .ascii  "\33[34m1. Ver Resultados\n"
                 .ascii  "\33[35m2. Introducir Resultados\n"
                 .asciz  "\33[36m3. Volver\n"
 
-m_sorteo2:      .ascii  "\33[35m=========INTRODUCIR RESULTADOS==========\n"
+m_sorteo2:      .ascii  "\n\33[35m=========INTRODUCIR RESULTADOS==========\n"
                 .ascii  "\33[31m1. 3 Primeros premios\n"
                 .ascii  "\33[32m2. Terminaciones 4 cifras\n"
                 .ascii  "\33[33m3. Terminaciones 3 cifras\n"
