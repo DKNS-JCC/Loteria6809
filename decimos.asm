@@ -57,9 +57,31 @@ programa_j:
     jsr programa
 
 ver_decimos:
+
     ldx #ver
     jsr imprime_cadena
-    bra decimos
+    lda #0
+    ldx #valor_decimos
 
+for:
+
+    cmpa #decimos_NUM   ; Compara el valor de la variable con el valor de decimos_NUM
+    beq salir           ; Si son iguales, sale del bucle
+    ldx #valor_decimos  ; Carga la direccion de valor_decimos
+    jsr imprime_cadena  ; Imprime el valor de valor_decimos
+    adda #1             ; Suma 1 a la variable
+    ldb #32       
+    stb pantalla        ; Imprime un espacio
+    bra for             ; Vuelve al bucle
+
+salir:
+    ldx #salir
+    jsr imprime_cadena
+    lda teclado
+    cmpa #'c
+    beq decimos
+    cmpa #'C
+    beq decimos
+    bra ver_decimos
 
 
