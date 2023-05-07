@@ -13,7 +13,7 @@ pantalla 	.equ 	0xFF00
 
                 .globl decimos
 
-m_decimos:      .ascii  "\33[32m=========DECIMOS==========\n"
+m_decimos:      .ascii  "\n\33[32m=========DECIMOS==========\n"
                 .ascii  "\33[33m1. Ver\n"
                 .ascii  "\33[34m2. Introducir resultados\n"
                 .asciz  "\33[35m3. Volver\n"

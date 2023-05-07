@@ -17,7 +17,7 @@ pantalla 	.equ 	0xFF00
 			; Inicio declaración de variables
 
 
-menu_p:         .ascii "\33[33m           _.-------._\n"
+menu_p:         .ascii \n"\33[33m           _.-------._\n"
                 .ascii "        _-'_.------._ `-_\n"
                 .ascii "      _- _-          `-_/\n"
                 .ascii "     -  - \n"
