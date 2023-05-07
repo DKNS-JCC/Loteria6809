@@ -17,7 +17,7 @@ puntuaje:     .word 0
                 .globl  comparacion_4cifras
                 .globl  comparacion_3cifras  
                 .globl  comparacion_2cifras
-                .globl  comparacion_reintegros
+                .globl  comparacion_reintegro
 
 
 comparacion_5cifras:
