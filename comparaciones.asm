@@ -15,7 +15,11 @@ reintegros:     .asciz "Terminacion de 1 cifra (reintegro) equivale a 1 punto\n"
 puntuaje:     .word 0
                 .globl  comparacion_5cifras
                 .globl  comparacion_4cifras
-                .globl  comparacion_3cifras  
+                .globl  comparacion_3cifras
+                .globl  bucle_despazamiento4cifras
+                .globl  bucle_despazamiento3cifras
+                .globl  bucle_despazamiento2cifras
+                .globl  bucle_despazamientoreintegros
 
 
 comparacion_5cifras:
@@ -55,7 +59,6 @@ comparacion_4cifras:
         jsr     imprime_cadena
 
 bucle_despazamiento4cifras:
-
 bucle_despazamiento3cifras:
 bucle_despazamiento2cifras:
 bucle_despazamientoreintegros:
