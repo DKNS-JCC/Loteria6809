@@ -10,16 +10,21 @@ tercero_5cifras:.asciz "Tercer premio de 5 cifras equivale a 200 puntos\n"
 cuatro_cifras:  .asciz "Terminacion de 4 cifras equivale a 50 puntos\n"
 tres_cifras:    .asciz "Terminacion de 3 cifras equivale a 10 puntos\n"
 dos_cifras:     .asciz "Terminacion de 2 cifras equivale a 5 puntos\n"
-reintegros:     .asciz "Terminacion de 1 cifra (reintegro) equivale a 1 punto\n"
+una_cifra:     .asciz "Terminacion de 1 cifra (reintegro) equivale a 1 punto\n"
 
 puntuaje:     .word 0
+
                 .globl  comparacion_5cifras
                 .globl  comparacion_4cifras
                 .globl  comparacion_3cifras
+                .globl  comparacion_2cifras
+                .globl  comparacion_reintegro
+                
                 .globl  bucle_despazamiento4cifras
                 .globl  bucle_despazamiento3cifras
                 .globl  bucle_despazamiento2cifras
                 .globl  bucle_despazamientoreintegros
+
 
 
 comparacion_5cifras:
@@ -52,13 +57,48 @@ else3:
         jsr comparacion_4cifras
 
 comparacion_4cifras:
-        leay    #cuatro.cifras,+1
-        cmps    y
+        puls    a
+        leay    a, 1
+        pshs    a
+        cmps    #cuatro.cifras
         bne     
         ldx     #cuatro_cifras
         jsr     imprime_cadena
+
 
 bucle_despazamiento4cifras:
 bucle_despazamiento3cifras:
 bucle_despazamiento2cifras:
 bucle_despazamientoreintegros:
+
+        jsr     comparacion_3cifras
+
+comparacion_3cifras:
+        puls    a
+        leay    a, 2
+        pshs    a
+        cmps    #tres.cifras
+        bne                             ;no se si crear otra subrutina
+        ldx     #tres_cifras
+        jsr     imprime_cadena
+        jsr     comparacion_2cifras
+
+comparacion_2cifras:
+        puls    a
+        leay    a, 3
+        pshs    a
+        cmps    #dos.cifras
+        bne     
+        ldx     #dos_cifras
+        jsr     imprime_cadena
+        jsr     comparacion_2cifras
+
+comparacion_reintegro:
+        puls    a
+        leay    a, 4
+        pshs    a
+        cmps    #reintegro
+        bne     
+        ldx     #una_cifra
+        jsr     imprime_cadena
+

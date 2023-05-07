@@ -12,11 +12,27 @@ pantalla 	.equ 	0xFF00
             .globl decimos
             .globl sorteo
             .globl limpia_pantalla
+            .globl error_switch
 
 			; Inicio declaración de variables
 
 
-menu_p:         .ascii "\33[31m=====LOTERIA 6809=====\n"
+menu_p:         .ascii "\33[33m           _.-------._\n"
+                .ascii "        _-'_.------._ `-_\n"
+                .ascii "      _- _-          `-_/\n"
+                .ascii "     -  - \n"
+                .ascii "  ___/  /______________\n"
+                .ascii "/___  .______________/\n"
+                .ascii " ___| |_____________\n"
+                .ascii "/___  .____________/\n"
+                .ascii "    \  \\n"
+                .ascii "     -_ -_             /|\n"
+                .ascii "       -_ -._        _- |\n"
+                .ascii "         -._ `------'_./\n"
+                .ascii "            `-------'\n"
+
+
+                .ascii "\33[31m=====LOTERIA 6809=====\n"
                 .ascii  "\33[32m1. DECIMOS\n"
                 .ascii  "\33[33m2. SORTEO\n"
                 .ascii  "\33[34m3. COMPROBAR\n"
@@ -26,18 +42,6 @@ menu_p:         .ascii "\33[31m=====LOTERIA 6809=====\n"
 
 
 
-m_sorteo:       .ascii  "\33[33m=========SORTEO========== \n"
-                .ascii  "\33[34m1. Ver Resultados\n"
-                .ascii  "\33[35m2. Introducir Resultados\n"
-                .asciz  "\33[36m3. Volver\n"
-
-m_sorteo2:      .ascii  "\33[35m=========INTRODUCIR RESULTADOS==========\n"
-                .ascii  "\33[31m1. 3 Primeros premios\n"
-                .ascii  "\33[32m2. Terminaciones 4 cifras\n"
-                .ascii  "\33[33m3. Terminaciones 3 cifras\n"
-                .ascii  "\33[34m4. Terminaciones 2 cifras\n"
-                .ascii  "\33[35m5. Reintegros\n"
-                .asciz  "\33[36m6. Volver\n"
 
 
 m_comprobar:      .asciz  "\31[34m=========COMPROBAR==========\n"
