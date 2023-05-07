@@ -53,3 +53,9 @@ comparacion_4cifras:
         bne     
         ldx     #cuatro_cifras
         jsr     imprime_cadena
+
+bucle_despazamiento4cifras:
+
+bucle_despazamiento3cifras:
+bucle_despazamiento2cifras:
+bucle_despazamientoreintegros:
