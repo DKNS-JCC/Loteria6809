@@ -45,12 +45,12 @@ sorteo:
     cmpa #'2 ; 2. Introducir resultados
     beq sorteo_introducir; Si es 2, va a sorteo_introducir
     cmpa #'3 ; 3. Volver
-    beq programa_j  ; Si es 3, vuelve al menu principal
+    beq programa_sorteo  ; Si es 3, vuelve al menu principal
     ldx #error_switch
     jsr imprime_cadena
     bra sorteo
 
-programa_j:
+programa_sorteo:
     jsr programa
 
 sorteo_ver:
