@@ -13,6 +13,7 @@ pantalla 	.equ 	0xFF00
                 .globl imprime_cadena_seguida
                 .globl salir
 
+                .globl valor_decimos
                 .globl decimos
 
 m_decimos:      .ascii  "\n\33[32m=========DECIMOS==========\n"
@@ -20,16 +21,16 @@ m_decimos:      .ascii  "\n\33[32m=========DECIMOS==========\n"
                 .ascii  "\33[34m2. Introducir resultados\n"
                 .asciz  "\33[35m3. Volver\n"
 
-valor_decimos:  .ascii  "65401"
-                .ascii  "15315"
-                .ascii  "56454"
-                .ascii  "65401"
-                .ascii  "54545"
-                .ascii  "14575"
-                .ascii  "48571"
-                .ascii  "54523"
-                .ascii  "65453"
-                .ascii  "54435"
+valor_decimos:  .asciz  "89603"
+                .asciz  "15315"
+                .asciz  "56454"
+                .asciz  "65301"
+                .asciz  "54545"
+                .asciz  "14575"
+                .asciz  "48571"
+                .asciz  "54523"
+                .asciz  "65453"
+                .asciz  "54435"
                 .asciz  "94461"
 
 decimos_MAX: .byte 11
@@ -64,14 +65,21 @@ ver_decimos:
     jsr imprime_cadena
     ldx #ver
     jsr imprime_cadena
+    lda #0
     ldx #valor_decimos
-for:    
-    cmpa #11
-    beq salir
+    
+for:
+
+    cmpa decimos_NUM
+    bge salir_bucle
     jsr imprime_cadena
     adda #1
+    ldb #'\n
+    stb pantalla
+    bra for
 
-salir:
+salir_bucle:
+
     ldx #salir
     jsr imprime_cadena
     lda teclado

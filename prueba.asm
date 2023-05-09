@@ -1,83 +1,64 @@
                 
-                .module decimos
-                .area PROG (ABS)
-                .org 0x100
+       .module comparaciones
+       pantalla     .equ   0xFF00
+       teclado      .equ   0xFF02
+                    
+;Premios por categoria
+primer_5cifras: .asciz "Primer premio de 5 cifras equivale a 1000 puntos\n"
+segundo_5cifras:.asciz "Segundo premio de 5 cifras equivale a 500 puntos\n"
+tercero_5cifras:.asciz "Tercer premio de 5 cifras equivale a 200 puntos\n"
+cuatro_cifras:  .asciz "Terminacion de 4 cifras equivale a 50 puntos\n"
+tres_cifras:    .asciz "Terminacion de 3 cifras equivale a 10 puntos\n"
+dos_cifras:     .asciz "Terminacion de 2 cifras equivale a 5 puntos\n"
+una_cifra:     .asciz "Terminacion de 1 cifra (reintegro) equivale a 1 punto\n"
 
-fin     	.equ 	0xFF01
-teclado		.equ	0xFF02
-pantalla 	.equ 	0xFF00
+resultado_txt:  .ascii "El resultado es: "
 
-                .globl imprime_cadena
-                .globl limpia_pantalla
-                .globl error_switch
-        
+;Declaraciones
+puntuaje:       .word 1000
+puntuaje_total: .word 0
 
-m_decimos:      .ascii  "\n\33[32m=========DECIMOS==========\n"
-                .ascii  "\33[33m1. Ver\n"
-                .ascii  "\33[34m2. Introducir resultados\n"
-                .asciz  "\33[35m3. Volver\n"
-
-valor_decimos:  .ascii  "65401"
-                .ascii  "15315"
-                .ascii  "56454"
-                .ascii  "65401"
-                .ascii  "54545"
-                .ascii  "14575"
-                .ascii  "48571"
-                .ascii  "54523"
-                .ascii  "65453"
-                .ascii  "54435"
-                .asciz  "94461"
-
-decimos_MAX: .byte 11
-decimos_NUM: .byte 11
-
-ver:     .asciz "Los decimos actuales son...\n"
+                .globl programa
+                .globl  valor_decimos
 
 
-decimos:
+                .globl  primer.premio
+                .globl  segundo.premio
+                .globl  tercer.premio
+                .globl  cuatro.cifras
+                .globl  tres.cifras
+                .globl  dos.cifras
+                .globl  reintegro
 
-    ldx #m_decimos
-    jsr imprime_cadena
-    lda teclado
-    ldx #limpia_pantalla
-    jsr imprime_cadena 
-    cmpa #'1 ; 1. Ver
-    beq ver_decimos; Si es 1, va a decimos_ver
-    cmpa #'2 ; 2. Introducir resultados
-    beq decimos; CAMBIAR
-    cmpa #'3 ; 3. Volver
-    beq programa_decimos    ; Si es 3, vuelve al menu principal
-    ldx #error_switch
-    jsr imprime_cadena
-    bra decimos
+                .globl  imprime_cadena
 
-programa_decimos:
-    rts
-
-ver_decimos:
-
-    ldx #ver
-    jsr imprime_cadena
-    lda #0
-    ldx #valor_decimos
-
-for:    
-    cmpa #11
-    beq salir_bucle
-    jsr imprime_cadena
-    adda #1
-
-salir_bucle:
-    ;ldx #salir
-    jsr imprime_cadena
-    lda teclado
-    cmpa #'c
-    beq decimos
-    cmpa #'C
-    beq decimos
-    nop
+                .globl comparacion_primero
 
 
+comparacion_primero:
+            clr     puntuaje
+            ldx     #valor_decimos
+            ldy     #primer.premio
+compara_bucle1:
+		lda     ,x+     
+		beq     compara_igual1          
+		cmpa    ,y+
+		beq     compara_bucle1
+compara_distinto1:
+        ldd     #0
+	    bra     fin_comparacion    
 
-                            
+compara_igual1:
+        ldd     #1
+        std     puntuaje
+
+fin_comparacion:
+        addd #'0
+        ldd puntuaje
+        std pantalla
+        ldd #'\n
+        std pantalla
+        jsr programa
+
+                
+
