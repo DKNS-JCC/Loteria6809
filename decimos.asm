@@ -13,6 +13,7 @@ pantalla 	.equ 	0xFF00
                 .globl imprime_cadena_seguida
                 .globl salir
 
+                .globl valor_decimos
                 .globl decimos
 
 m_decimos:      .ascii  "\n\33[32m=========DECIMOS==========\n"
