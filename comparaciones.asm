@@ -33,6 +33,7 @@ numeros.reintegro: .byte 0
                 .globl  comparacion_4cifras
                 .globl  comparacion_3cifras
                 .globl  comparacion_2cifras
+                .globl  comparacion_reintegros
                 
 
 ;Itinerancia de los numeros del sorteo
