@@ -1,9 +1,8 @@
        .module comparaciones
        pantalla     .equ   0xFF00
        teclado      .equ   0xFF02
-                    .include "numeros.asm"
-                    .include "manejo_cadenas.asm"
-
+                    
+;Premios por categoria
 primer_5cifras: .asciz "Primer premio de 5 cifras equivale a 1000 puntos\n"
 segundo_5cifras:.asciz "Segundo premio de 5 cifras equivale a 500 puntos\n"
 tercero_5cifras:.asciz "Tercer premio de 5 cifras equivale a 200 puntos\n"
@@ -12,8 +11,10 @@ tres_cifras:    .asciz "Terminacion de 3 cifras equivale a 10 puntos\n"
 dos_cifras:     .asciz "Terminacion de 2 cifras equivale a 5 puntos\n"
 una_cifra:     .asciz "Terminacion de 1 cifra (reintegro) equivale a 1 punto\n"
 
+;Declaraciones
 puntuaje:     .word 0
-
+                .globl  numeros.asm
+                .globl  imprime_cadena
                 .globl  comparacion_5cifras
                 .globl  comparacion_4cifras
                 .globl  comparacion_3cifras
@@ -56,22 +57,12 @@ else2:
 else3:
         jsr comparacion_4cifras
 
+
 comparacion_4cifras:
         puls    a
-        leay    a, 1
+        leay    1,a
         pshs    a
-        cmps    #cuatro.cifras
-        bne     
-        ldx     #cuatro_cifras
-        jsr     imprime_cadena
-
-
-bucle_despazamiento4cifras:
-bucle_despazamiento3cifras:
-bucle_despazamiento2cifras:
-bucle_despazamientoreintegros:
-
-        jsr     comparacion_3cifras
+        
 
 comparacion_3cifras:
         puls    a
@@ -102,3 +93,15 @@ comparacion_reintegro:
         ldx     #una_cifra
         jsr     imprime_cadena
 
+bucle_despazamiento4cifras: 
+        ldb     #0         
+        ldu     #cuatro.cifras
+        ldu     ,b+
+        cmpb    #1
+        beq     comparacion_3cifras
+        cmps    u
+        bne     bucle_despazamiento4cifras
+        adda    #50
+        ldx     #cuatro_cifras
+        jsr     imprime_cadena
+        

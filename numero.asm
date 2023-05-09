@@ -7,8 +7,8 @@ segundo.premio:
 tercero.premio:
             .asciz "18918"
 cuatro.cifras:
-            .asciz "06338"
-            .asciz "08173"
+            .asciz "6338"
+            .asciz "8173"
 tres.cifras:
             .ascii "224"
             .ascii "231"
