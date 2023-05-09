@@ -30,7 +30,7 @@ valor_decimos:  .ascii  "65401"
                 .ascii  "54523"
                 .ascii  "65453"
                 .ascii  "54435"
-                .asciz  "94461\n"
+                .asciz  "94461"
 
 decimos_MAX: .byte 11
 decimos_NUM: .byte 11
@@ -65,7 +65,13 @@ ver_decimos:
     ldx #ver
     jsr imprime_cadena
     ldx #valor_decimos
-    jsr imprime_cadena_seguida
+for:    
+    cmpa #11
+    beq salir
+    jsr imprime_cadena
+    adda #1
+
+salir:
     ldx #salir
     jsr imprime_cadena
     lda teclado
