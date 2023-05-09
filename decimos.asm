@@ -10,6 +10,8 @@ pantalla 	.equ 	0xFF00
                 .globl error_switch
                 .globl limpia_pantalla
                 .globl programa
+                .globl imprime_cadena_seguida
+                .globl salir
 
                 .globl decimos
 
@@ -33,11 +35,12 @@ valor_decimos:  .ascii  "65401"
 decimos_MAX: .byte 11
 decimos_NUM: .byte 11
 
-ver:     .asciz "Los decimos actuales son...\n"
+ver:     .asciz "Los decimos actuales son...\n\n"
 
 
 decimos:
-
+    ldx #limpia_pantalla
+    jsr imprime_cadena
     ldx #m_decimos
     jsr imprime_cadena
     lda teclado
@@ -57,12 +60,11 @@ programa_decimos:
     jsr programa
 
 ver_decimos:
-
+    ldx #limpia_pantalla
+    jsr imprime_cadena
     ldx #ver
     jsr imprime_cadena
-    lda #0
     ldx #valor_decimos
-
 for:    
     cmpa #11
     beq salir
@@ -77,6 +79,8 @@ salir:
     beq decimos
     cmpa #'C
     beq decimos
-    nop
+    ldx #error_switch
+    jsr imprime_cadena
+    bra ver_decimos
 
 
