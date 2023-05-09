@@ -18,20 +18,20 @@ m_decimos:      .ascii  "\n\33[32m=========DECIMOS==========\n"
                 .ascii  "\33[34m2. Introducir resultados\n"
                 .asciz  "\33[35m3. Volver\n"
 
-valor_decimos:  .asciz  "65401"
-                .asciz  "15315"
-                .asciz  "56454"
-                .asciz  "65401"
-                .asciz  "54545"
-                .asciz  "14575"
-                .asciz  "48571"
-                .asciz  "54523"
-                .asciz  "65453"
-                .asciz  "54435"
+valor_decimos:  .ascii  "65401"
+                .ascii  "15315"
+                .ascii  "56454"
+                .ascii  "65401"
+                .ascii  "54545"
+                .ascii  "14575"
+                .ascii  "48571"
+                .ascii  "54523"
+                .ascii  "65453"
+                .ascii  "54435"
                 .asciz  "94461"
 
-decimos_MAX: .byte 10
-decimos_NUM: .byte 10
+decimos_MAX: .byte 11
+decimos_NUM: .byte 11
 
 ver:     .asciz "Los decimos actuales son...\n"
 
@@ -48,12 +48,12 @@ decimos:
     cmpa #'2 ; 2. Introducir resultados
     beq decimos; CAMBIAR
     cmpa #'3 ; 3. Volver
-    beq programa_j    ; Si es 3, vuelve al menu principal
+    beq programa_decimos    ; Si es 3, vuelve al menu principal
     ldx #error_switch
     jsr imprime_cadena
     bra decimos
 
-programa_j:
+programa_decimos:
     jsr programa
 
 ver_decimos:
@@ -63,16 +63,11 @@ ver_decimos:
     lda #0
     ldx #valor_decimos
 
-for:
-
-    cmpa #decimos_NUM   ; Compara el valor de la variable con el valor de decimos_NUM
-    beq salir           ; Si son iguales, sale del bucle
-    ldx #valor_decimos  ; Carga la direccion de valor_decimos
-    jsr imprime_cadena  ; Imprime el valor de valor_decimos
-    adda #1             ; Suma 1 a la variable
-    ldb #32       
-    stb pantalla        ; Imprime un espacio
-    bra for             ; Vuelve al bucle
+for:    
+    cmpa #11
+    beq salir
+    jsr imprime_cadena
+    adda #1
 
 salir:
     ldx #salir
@@ -82,6 +77,6 @@ salir:
     beq decimos
     cmpa #'C
     beq decimos
-    bra ver_decimos
+    nop
 
 

@@ -7,9 +7,10 @@ pantalla 	.equ 	0xFF00
                 .globl imprime_cadena
                 .globl limpia_pantalla
                 .globl error_switch
+                .globl salir
 
 limpia_pantalla:  .asciz  "\033[2J"
-salir:            .asciz  "\nPulse la tecla c para salir.\n"
+salir:            .asciz  "\n\nPulse la tecla c para salir.\n"
 error_switch:     .asciz  "\33[31mOpcion incorrecta, intentelo de nuevo.\n"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
