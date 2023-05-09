@@ -13,7 +13,7 @@ pantalla 	.equ 	0xFF00
             .globl sorteo
             .globl limpia_pantalla
             .globl error_switch
-
+            .globl comparacion_primero
 			; Inicio declaración de variables
 
 
@@ -65,7 +65,7 @@ programa:
     cmpa #'2 ; 2. Sorteo
     beq sorteo_j; Si es 2, va a sorteo
     cmpa #'3 ; 3. Comprobar
-    beq comprobar ; Si es 3, va a comprobar
+    beq comprobar_j ; Si es 3, va a comprobar
     cmpa #'4 ; 4. Salir
     beq acabar  ; Si es 4, va a salir
 
@@ -80,13 +80,12 @@ decimos_j:
 sorteo_j:
     jsr sorteo
 
+comprobar_j:
+    jsr comparacion_primero
+
 acabar: 	clra
 	sta 	fin
 
-comprobar:     
-    ldx #m_comprobar
-    jsr imprime_cadena
-    bra acabar
 
 
     .area FIJA(ABS)
