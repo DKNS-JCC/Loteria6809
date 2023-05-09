@@ -13,7 +13,6 @@ una_cifra:     .asciz "Terminacion de 1 cifra (reintegro) equivale a 1 punto\n"
 
 ;Declaraciones
 puntuaje:       .word 0
-puntuaje_total: .word 0
 numeros.cuatrocifras: .byte 0
 numeros.trescifras: .byte 0
 numeros.doscifras: .byte  0
@@ -26,7 +25,9 @@ numeros.reintegro: .byte 0
                 .globl  tres.cifras
                 .globl  dos.cifras
                 .globl  reintegro
+
                 .globl  imprime_cadena
+
                 .globl  comparacion_primero
                 .globl  comparacion_segundo
                 .globl  comparacion_tercero
@@ -34,6 +35,9 @@ numeros.reintegro: .byte 0
                 .globl  comparacion_3cifras
                 .globl  comparacion_2cifras
                 .globl  comparacion_reintegros
+
+                .globl  programa
+                .globl  valor_decimos
                 
 
 ;Itinerancia de los numeros del sorteo
@@ -41,7 +45,7 @@ numeros.reintegro: .byte 0
 
 ;Comparacion del primer premio
 comparacion_primero:
-                ldx     #31231
+                ldx     #valor_decimos
                 ldy     #primer.premio
 compara_bucle1:
 		lda     ,x+
@@ -68,7 +72,7 @@ compara_fin1:
 
 ;Comparacion del segundo premio
 comparacion_segundo:
-                ldx     #31231
+                ldx     #valor_decimos
                 ldy     #segundo.premio
 compara_bucle2:
 		lda     ,x+
@@ -95,7 +99,7 @@ compara_fin2:
 
 ;Comparacion del tercer premio
 comparacion_tercero:
-                ldx     #31231
+                ldx     #valor_decimos
                 ldy     #tercer.premio
 compara_bucle3:
 		lda     ,x+
@@ -121,7 +125,7 @@ compara_fin3:
 
 ;Comparacion de numeros de 4 cifras
 comparacion_4cifras:
-                ldx     #31231
+                ldx     #valor_decimos
                 leax    1, x  
                 ldy     #tres.cifras
 
@@ -157,7 +161,7 @@ compara_fin4:
 
 ;Comparacion de numeros de 3 cifras
 comparacion_3cifras:
-                ldx     #31231
+                ldx     #valor_decimos
                 leax    1, x  
                 ldy     #tres.cifras
 
@@ -193,7 +197,7 @@ compara_fin5:
 
 ;Comparacion de terminaciones de 2 cifras
 comparacion_2cifras:
-                ldx     #31231
+                ldx     #valor_decimos
                 leax    1, x  
                 ldy     #cuatro.cifras
 
@@ -229,7 +233,7 @@ compara_fin6:
 
 ;Comparaciones de reintegros
 comparacion_reintegros:
-                ldx     #31231
+                ldx     #valor_decimos
                 leax    1, x  
                 ldy     #reintegro
 
@@ -247,16 +251,22 @@ compara_bucle7:
                 bne     compara_bucle7
 compara_distinto7:
                 ldd     #0
-		jsr     
+		jsr     fin_comparacion
 compara_igual7:
 		ldd     puntuaje
                 addd    #1
                 std     puntuaje
-                jsr     
+                jsr     fin_comparacion     
                 
 compara_fin7:
 		addd    #'0
 		stb     pantalla			
                 ldb     #'\n
 		stb     pantalla
-                jsr
+                jsr     fin_comparacion
+
+fin_comparacion:
+                ldd    puntuaje
+                std    pantalla
+                jsr    programa
+
