@@ -9,6 +9,7 @@ pantalla 	.equ 	0xFF00
                 .globl error_switch
                 .globl imprime_cadena_seguida
                 .globl salir
+                .globl imprime_decimal
 
 limpia_pantalla:  .asciz  "\033[2J"
 salir:            .asciz  "\n\n\nPulse la tecla c para salir.\n"
@@ -35,24 +36,83 @@ ret_imprime_cadena:
         puls    a               ; Recupera el valor de A
         rts                     ; y sale de la subrutina equivalente a puls pc (return)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-imprime_cadena_seguida:
-    pshs a            ; Guarda el valor de A en la pila
-    clrb        ; Inicializa el contador a 0
-numero_sgte:
-    lda ,x+     ; Carga el primer caracter de la cadena
-    beq loop    ; Si es 0, sale a ret_imprime_cadena
-    cmpa #'\n   ; Compara el caracter con el salto de linea
-    beq contador        ; Si es igual, salta a contador
-    sta pantalla        ; Si no, lo imprime en pantalla
-    bra numero_sgte        ; y vuelve a sgte
-contador:
-    incb        ; Incrementa el contador
-    bra loop    ; Vuelve a numero_sgte
-loop:
-    puls a      
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;imprime_decimal
+;ENTRADA: D
+;Registros Afectados: D,X,CC
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+imprime_decimal:
+    pshs x
+    ldx    #0                       ;inicializa el contador a 0
+id_primera_cifra:
+    cmpd #10000                     ;compara el valor de D con 10000
+    blo  id_imprime_primera_cifra   ;si D es menor que 10000, imprime la primera cifra
+    subd #10000                     ;si no, resta 10000 a D
+    exg  d,x                        ;intercambia el valor de D con el valor de X
+    incb                            ;incrementa el valor de B
+    exg  d,x                        ;intercambia el valor de D con el valor de X
+    bra  id_primera_cifra           ;vuelve a la etiqueta id_primera_cifra
+
+id_imprime_primera_cifra:
+    exg  x,d                        ;intercambia el valor de X con el valor de D
+    addb #'0                        ;suma 0 a B
+    stb  pantalla                   ;imprime el valor de B en pantalla
+    exg  x,d                        ;intercambia el valor de X con el valor de D
+    ldx  #0  
+id_segunda_cifra:
+    cmpd #1000                      ;compara el valor de D con 1000
+    blo  id_imprime_segunda_cifra   ;si D es menor que 1000, imprime la primera cifra
+    subd #1000                      ;si no, resta 1000 a D
+    exg  d,x                        ;intercambia el valor de D con el valor de X
+    incb                            ;incrementa el valor de B
+    exg  d,x                        ;intercambia el valor de D con el valor de X
+    bra  id_segunda_cifra           ;vuelve a la etiqueta id_segunda_cifra
+
+id_imprime_segunda_cifra:
+    exg  x,d                        ;intercambia el valor de X con el valor de D
+    addb #'0                        ;suma 0 a B
+    stb  pantalla                   ;imprime el valor de B en pantalla
+    exg  x,d                        ;intercambia el valor de X con el valor de D
+    ldx  #0  
+id_tercera_cifra:
+    cmpd #100                       ;compara el valor de D con 100
+    blo  id_imprime_tercera_cifra   ;si D es menor que 100, imprime la primera cifra
+    subd #100                       ;si no, resta 100 a D
+    exg  d,x                        ;intercambia el valor de D con el valor de X
+    incb                            ;incrementa el valor de B
+    exg  d,x                        ;intercambia el valor de D con el valor de X
+    bra  id_tercera_cifra           ;vuelve a la etiqueta id_tercera_cifra
+
+id_imprime_tercera_cifra:
+    exg  x,d                        ;intercambia el valor de X con el valor de D
+    addb #'0                        ;suma 0 a B
+    stb  pantalla                   ;imprime el valor de B en pantalla
+    exg  x,d                        ;intercambia el valor de X con el valor de D
+    ldx  #0  
+id_cuarta_cifra:
+    cmpd #10                        ;compara el valor de D con 10
+    blo  id_imprime_cuarta_cifra    ;si D es menor que 10, imprime la primera cifra
+    subd #10                        ;si no, resta 10 a D
+    exg  d,x                        ;intercambia el valor de D con el valor de X
+    incb                            ;incrementa el valor de B
+    exg  d,x                        ;intercambia el valor de D con el valor de X
+    bra  id_cuarta_cifra            ;vuelve a la etiqueta id_cuarta_cifra
+
+id_imprime_cuarta_cifra:
+    exg  x,d                        ;intercambia el valor de X con el valor de D
+    addb #'0                        ;suma 0 a B
+    stb  pantalla                   ;imprime el valor de B en pantalla
+    exg  x,d                        ;intercambia el valor de X con el valor de D
+    ldx  #0  
+id_quinta_cifra:
+    addb #'0                        ;suma 0 a B
+    stb  pantalla                   ;imprime el valor de B en pantalla
+    puls x
     rts
+
+
 
 
 
