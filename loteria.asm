@@ -40,12 +40,6 @@ menu_p:         .ascii "\n\33[33m           _.-------._\n"
 
 
 
-
-
-
-
-
-
             			; Fin declaración de variables
 	        	
 ; Comienzo del programa
