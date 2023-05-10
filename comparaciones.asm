@@ -34,10 +34,12 @@ numeros.reintegro:      .byte   3
                 .globl  reintegro
                 .globl  imprime_cadena
                 .globl  programa_comparaciones
+                
 
 
 programa_comparaciones:
-        ;rotacion de numeros
+        bucle_decimos0:
+
 
         comparacion_primero:
         ldx     #valor_decimos
@@ -50,7 +52,7 @@ programa_comparaciones:
         else1:
         ldd     #1000
         std     puntuaje
-        ldd     #primer_5cifras
+        ldx     #primer_5cifras
         jsr     imprime_cadena
         ldd     #0
         bra     comparacion_4cifras
@@ -67,7 +69,7 @@ programa_comparaciones:
         else2:
         ldd     puntuaje
         addd    #500
-        ldd     #segundo_5cifras
+        ldx     #segundo_5cifras
         jsr     imprime_cadena
         ldd     #0
         bra     comparacion_4cifras
@@ -84,7 +86,7 @@ programa_comparaciones:
         else3:
         ldd     puntuaje
         addd    #200
-        ldd     #tercero_5cifras
+        ldx     #tercero_5cifras
         jsr     imprime_cadena
         ldd     #0
         bra     comparacion_4cifras
@@ -107,7 +109,7 @@ programa_comparaciones:
         clrb
         ldd     puntuaje
         addd    #50
-        ldd     #cifras4
+        ldx     #cifras4
         jsr     imprime_cadena
         jsr     comparacion_3cifras
 
@@ -120,7 +122,7 @@ programa_comparaciones:
         dec     numeros.cuatrocifras
         bucle_numeros3cifras:
         leax    2,x
-        ldy     #cuatro.cifras
+        ldy     #tres.cifras
         cmpb    #0
         bne     else5
         bra     comparacion_3cifras
@@ -129,7 +131,7 @@ programa_comparaciones:
         clrb
         ldd     puntuaje
         addd    #5
-        ldd     #cifras3
+        ldx     #cifras3
         jsr     imprime_cadena
         jsr     comparacion_2cifras
 
@@ -151,7 +153,7 @@ programa_comparaciones:
         clrb
         ldd     puntuaje
         addd    #5
-        ldd     #cifras2
+        ldx     #cifras2
         jsr     imprime_cadena
         jsr     comparacion_reintegros
 
@@ -176,9 +178,14 @@ programa_comparaciones:
         clrb
         ldd     puntuaje
         addd    #1
-        ldd     #cifra1
+        ldx     #cifra1
         jsr     imprime_cadena
+        ldd     puntuaje_total
+        addd    puntuaje
+        std     puntuaje_total
         jsr     programa_comparaciones
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;comparacion de 2 numeros                                                                                              ;
