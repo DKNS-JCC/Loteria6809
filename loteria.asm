@@ -13,7 +13,7 @@ pantalla 	.equ 	0xFF00
             .globl sorteo
             .globl limpia_pantalla
             .globl error_switch
-            .globl comparacion_primero
+            .globl programa_comparaciones
 			; Inicio declaración de variables
 
 
@@ -77,7 +77,7 @@ sorteo_j:
     jsr sorteo
 
 comprobar_j:
-    jsr comparacion_primero
+    jsr programa_comparaciones
 
 acabar: 	clra
 	sta 	fin

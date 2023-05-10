@@ -1,5 +1,4 @@
-                
-       .module comparaciones_prueba
+        .module comparaciones_prueba
        pantalla     .equ   0xFF00
        teclado      .equ   0xFF02
                     
