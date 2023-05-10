@@ -47,7 +47,7 @@ bucle_numeros:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 comparacion_primero:
-        ldx     valor_decimos
+        ldx     #valor_decimos
         ldy     #primer.premio
 compara_bucle1:
 	lda     ,x+     
@@ -55,8 +55,6 @@ compara_bucle1:
 	cmpa    ,y+
 	beq     compara_bucle1
 compara_distinto1:
-        ldd     #0
-	std     puntuaje
         jsr     comparacion_segundo
 
 compara_igual1:
@@ -69,13 +67,14 @@ compara_igual1:
 fin_comparacion1:
         std     puntuaje_total
         clr     puntuaje
+        ldd     #0
         jsr     comparacion_4cifras
 
 
 
 ;Comparacion del segundo premio
 comparacion_segundo:
-        ldx     valor_decimos
+        ldx     #valor_decimos
         ldy     #segundo.premio
 compara_bucle2:
 	lda     ,x+     
@@ -83,9 +82,7 @@ compara_bucle2:
 	cmpa    ,y+
 	beq     compara_bucle2
 compara_distinto2:
-        ldd     #0
-	std     puntuaje
-        jsr     comparacion_tercero    ;Cambiar por comparacion de 3 cifras
+        jsr     comparacion_tercero
 
 compara_igual2:
         ldd     #500
@@ -97,13 +94,14 @@ compara_igual2:
 fin_comparacion2:
         std     puntuaje_total
         clr     puntuaje
+        ldd     #0
         jsr     comparacion_4cifras
 
 
                 
 ;Comparacion del tercer premio
 comparacion_tercero:
-        ldx     valor_decimos
+        ldx     #valor_decimos
         ldy     #tercer.premio
 compara_bucle3:
 	lda     ,x+     
@@ -111,8 +109,6 @@ compara_bucle3:
 	cmpa    ,y+
 	beq     compara_bucle3
 compara_distinto3:
-        ldd     #0
-	std     puntuaje
         jsr     comparacion_4cifras    
 
 compara_igual3:
@@ -125,13 +121,14 @@ compara_igual3:
 fin_comparacion3:
         std     puntuaje_total
         clr     puntuaje
+        ldd     #0
         jsr     comparacion_4cifras
 
 
 
 ;Comparacion de numeros de 4 cifras
 comparacion_4cifras:
-        ldx     valor_decimos
+        ldx     #valor_decimos
         leay    1,x
         ldy     #cuatro.cifras
 compara_bucle4:
@@ -140,8 +137,6 @@ compara_bucle4:
 	cmpa    ,y+
 	beq     compara_bucle4
 compara_distinto4:
-        ldd     #0
-        std     puntuaje
 	bra     fin_comparacion4    
 
 compara_igual4:
@@ -154,4 +149,5 @@ compara_igual4:
 fin_comparacion4:
         std     puntuaje_total
         clr     puntuaje
+        ldd     #0
         rts
