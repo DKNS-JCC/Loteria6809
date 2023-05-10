@@ -71,14 +71,14 @@ ver_decimos:
 for:
 
     cmpa decimos_NUM
-    bge salir_bucle
+    bge salir_bucle0
     jsr imprime_cadena
     adda #1
     ldb #'\n
     stb pantalla
     bra for
 
-salir_bucle:
+salir_bucle0:
 
     ldx #salir
     jsr imprime_cadena
