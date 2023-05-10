@@ -44,10 +44,6 @@ menu_p:         .ascii "\n\33[33m           _.-------._\n"
 
 
 
-m_comprobar:      .asciz  "\31[34m=========COMPROBAR==========\n"
-
-
-
 
 
             			; Fin declaración de variables
