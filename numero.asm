@@ -11,9 +11,9 @@ primer.premio:
         .asciz "89603"
 segundo.premio:
 
-            .asciz "72289"
+        .asciz "72289"
 tercer.premio:
-            .asciz "18918"
+        .asciz "18918"
 
 cuatro.cifras:
         .asciz "6338"
