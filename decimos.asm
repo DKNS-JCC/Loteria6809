@@ -10,7 +10,6 @@ pantalla 	.equ 	0xFF00
                 .globl error_switch
                 .globl limpia_pantalla
                 .globl programa
-                .globl imprime_cadena_seguida
                 .globl salir
 
                 .globl valor_decimos
