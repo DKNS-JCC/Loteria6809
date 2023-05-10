@@ -66,8 +66,10 @@ programa_decimos:
 ver_decimos:
     ldx #limpia_pantalla
     jsr imprime_cadena
+    ;LIMPIA PANTALLA
     ldx #ver
     jsr imprime_cadena
+    
     lda #0
     ldx #valor_decimos
     
