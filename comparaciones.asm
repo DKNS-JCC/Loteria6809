@@ -10,14 +10,13 @@ cifras4:        .asciz "Terminacion de 4 cifras equivale a 50 puntos\n"
 cifras3:        .asciz "Terminacion de 3 cifras equivale a 10 puntos\n"
 cifras2:        .asciz "Terminacion de 2 cifras equivale a 5 puntos\n"
 cifra1:         .asciz "Terminacion de 1 cifra (reintegro) equivale a 1 punto\n"
+premiado:       .asciz "El"
 
 resultado_txt:  .ascii "El resultado es: "
 
 ;Declaraciones
-numeros_sorteo: .byte   0
 puntuaje:       .word   0
 puntuaje_total: .word   0
-
 numeros.cuatrocifras:   .byte   2
 numeros.trescifras:     .byte   14
 numeros.doscifras:      .byte   5
@@ -34,14 +33,28 @@ numeros.reintegro:      .byte   3
                 .globl  reintegro
                 .globl  imprime_cadena
                 .globl  programa_comparaciones
+                .globl  decimos_NUM
                 
 
 
 programa_comparaciones:
         bucle_decimos0:
 
+        ldx     #premiados
+        jsr     imprime_cadena
+        lda     decimos_NUM
+        ldx     #valor_decimos
+        jsr     imprime_decimal
+                                ;itinerancia de numeros
+        cmpa    #0
+        beq     salida
+        dec     a
+        bra     comparacion_primero
+        salida:
+        rts     
+        
+        comparacion_primero:
 
-comparacion_primero:
         ldx     #valor_decimos
         ldy     #primer.premio
         jsr     compara_bucle
@@ -95,6 +108,7 @@ else3:
 comparacion_4cifras:
         lda     numeros.cuatrocifras
         ldx     #valor_decimos
+                                        ;itinerancia de numeros
         cmpa    #0
         beq     comparacion_3cifras
         dec     numeros.cuatrocifras
@@ -117,6 +131,7 @@ else4:
 comparacion_3cifras:
         lda     numeros.trescifras
         ldx     #valor_decimos
+                                        ;itinerancia de numeros
         cmpa    #0
         beq     comparacion_2cifras
         dec     numeros.cuatrocifras
@@ -139,6 +154,7 @@ else5:
 comparacion_2cifras:
         lda     numeros.doscifras
         ldx     #valor_decimos
+                                        ;itinerancia de numeros
         cmpa    #0
         beq     comparacion_3cifras
         dec     numeros.doscifras
@@ -161,6 +177,7 @@ else6:
 comparacion_reintegros:
         lda     numeros.reintegro
         ldx     #valor_decimos
+                                        ;itinerancia de numeros
         cmpa    #0
         beq     salto
         dec     numeros.reintegro
@@ -197,7 +214,7 @@ else7:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 compara_bucle:
 	lda     ,x+
-	beq     compara_IGUAL
+	beq     compara_IGUAL           ;para si llega a final de linea
 	cmpa    ,y+
 	beq     compara_bucle
 compara_DISTINTO:
