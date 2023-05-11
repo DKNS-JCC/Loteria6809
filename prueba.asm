@@ -1,3 +1,4 @@
+
                 
        .module comparaciones_prueba
        pantalla     .equ   0xFF00
@@ -277,3 +278,4 @@ opcion_Comprobar_bucle_fin:
  
   jsr saltoLinea
     jmp Menu_Inicial_sin_limpiar_patalla ;vuelve automaticamente a menu principal
+
