@@ -110,8 +110,3 @@ id_quinta_cifra:
     stb  pantalla                   ;imprime el valor de B en pantalla
     puls x
     rts
-
-
-
-
-

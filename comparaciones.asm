@@ -12,9 +12,10 @@ cifras2:        .asciz "Terminacion de 2 cifras equivale a 5 puntos\n"
 cifra1:         .asciz "Terminacion de 1 cifra (reintegro) equivale a 1 punto\n"
 
 resultado_txt:  .ascii "El resultado es: "
+presentacion.txt: .ascii        "Su decimos es: "
 
 ;Declaraciones
-numeros_sorteo: .byte   0
+decimos0:        .word   0
 puntuaje:       .word   0
 puntuaje_total: .word   0
 
@@ -23,7 +24,7 @@ numeros.trescifras:     .byte   14
 numeros.doscifras:      .byte   5
 numeros.reintegro:      .byte   3
 
-                .globl programa
+                .globl  programa
                 .globl  valor_decimos
                 .globl  primer.premio
                 .globl  segundo.premio
@@ -33,13 +34,31 @@ numeros.reintegro:      .byte   3
                 .globl  dos.cifras
                 .globl  reintegro
                 .globl  imprime_cadena
+                .globl  imprime_decimal0
                 .globl  programa_comparaciones
+                .globl  decimos_NUM
                 
 
 
 programa_comparaciones:
         bucle_decimos0:
-
+        ldb     #decimos_NUM
+        cmpb    #0
+        beq     fin0
+        decb
+        bra     presentacion_decimo
+        presentacion_decimo:
+        clrb
+        clra     
+        ldx     #presentacion.txt
+        jsr     imprime_cadena
+        ldd     #valor_decimos
+        jsr     imprime_decimal0
+        lda     #'\n
+        sta     pantalla
+        bra     comparacion_primero
+        fin0:
+        rts
 
 comparacion_primero:
         ldx     #valor_decimos
@@ -183,13 +202,15 @@ else7:
         ldd     puntuaje_total
         addd    puntuaje
         std     puntuaje_total
+        ldx     #valor_decimos
+        leax    6, x
+        stx     decimos0
         jsr     programa_comparaciones
-
-
+ 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;comparacion de 2 numeros                                                                                              ;
-; compara lso numeros de los registros X e Y y da un valor de retorno                                                  ;
+; compara los numeros de los registros X e Y y da un valor de retorno                                                  ;
 ;                                                                                                                      ;       
 ; Entrada: X-direcciOn de comienzo de la cadena                                                                        ;
 ; Salida: b con un valor de retorno                                                                                    ;   
