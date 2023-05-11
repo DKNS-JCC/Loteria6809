@@ -7,6 +7,20 @@
         .globl  tres.cifras
         .globl  dos.cifras
         .globl  reintegro
+
+        .globl  cantidad_4cifras
+        .globl  cantidad_3cifras
+        .globl  cantidad_2cifras
+        .globl  cantidad_reintegro
+
+
+cantidad_4cifras:       .byte 2
+cantidad_3cifras:       .byte 14
+cantidad_2cifras:       .byte 5
+cantidad_reintegro:     .byte 3
+
+        
+
 primer.premio:
         .asciz "89603"
 segundo.premio:
@@ -19,29 +33,29 @@ cuatro.cifras:
         .asciz "6338"
         .asciz "8173"
 tres.cifras:
-        .ascii "224"
-        .ascii "231"
-        .ascii "266"
-        .ascii "278"
-        .ascii "300"
-        .ascii "387"
-        .ascii "457"
-        .ascii "527"
-        .ascii "538"
-        .ascii "550"
-        .ascii "726"
-        .ascii "760"
-        .ascii "888"
+        .asciz "224"
+        .asciz "231"
+        .asciz "266"
+        .asciz "278"
+        .asciz "300"
+        .asciz "387"
+        .asciz "457"
+        .asciz "527"
+        .asciz "538"
+        .asciz "550"
+        .asciz "726"
+        .asciz "760"
+        .asciz "888"
         .asciz "928"
 dos.cifras:
-        .ascii "11"
-        .ascii "18"
-        .ascii "24"
-        .ascii "29"
+        .asciz "11"
+        .asciz "18"
+        .asciz "24"
+        .asciz "29"
         .asciz "41"
 reintegro:
-        .ascii "3"
-        .ascii "4"
-        .ascii "9"
+        .asciz "3"
+        .asciz "4"
+        .asciz "9"
 
         

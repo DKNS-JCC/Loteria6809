@@ -13,11 +13,19 @@ pantalla 	.equ 	0xFF00
     .globl  dos.cifras
     .globl  reintegro
 
+    
+    .globl  cantidad_4cifras
+    .globl  cantidad_3cifras
+    .globl  cantidad_2cifras
+    .globl  cantidad_reintegro
+
     .globl imprime_cadena
     .globl limpia_pantalla
     .globl error_switch
     .globl programa
     .globl salir
+    .globl imprime_num
+    .globl barra
 
     .globl sorteo
 
@@ -38,13 +46,13 @@ m_sorteo2:      .ascii  "\n\33[35m=========INTRODUCIR RESULTADOS==========\n"
                 .asciz  "\33[36m6. Volver\n"
 
 
-primerpremio_txt: .ascii  "PRIMER PREMIO:\t"
-segundopremio_txt: .ascii  "SEGUNDO PREMIO:\t"
-tercerpremio_txt: .ascii  "TERCER PREMIO:\t"
-terminacion4_txt: .ascii  "TERMINACION 4 CIFRAS:\t"
-terminacion3_txt: .ascii  "TERMINACION 3 CIFRAS:\t"
-terminacion2_txt: .ascii  "TERMINACION 2 CIFRAS:\t"
-reintegro_txt: .ascii  "REINTEGRO:\t"
+primerpremio_txt:  .asciz "PRIMER PREMIO:\t"
+segundopremio_txt: .asciz "SEGUNDO PREMIO:\t"
+tercerpremio_txt: .asciz  "TERCER PREMIO:\t"
+terminacion4_txt: .asciz  "\33[32mTERMINACION 4 CIFRAS:\n"
+terminacion3_txt: .asciz  "TERMINACION 3 CIFRAS:\n"
+terminacion2_txt: .asciz  "TERMINACION 2 CIFRAS:\n"
+reintegro_txt:    .asciz  "\33[35mREINTEGRO:\n"
 
 
 sorteo:
@@ -70,6 +78,9 @@ sorteo_ver:
 
     ldx #limpia_pantalla
     jsr imprime_cadena
+    ldb #'\n
+    stb pantalla
+
     ldx #primerpremio_txt
     jsr imprime_cadena
     ldx #primer.premio
@@ -77,7 +88,6 @@ sorteo_ver:
     ldb #'\n
     stb pantalla
 
-    jsr imprime_cadena
     ldx #segundopremio_txt
     jsr imprime_cadena
     ldx #segundo.premio
@@ -90,9 +100,60 @@ sorteo_ver:
     ldx #tercer.premio
     jsr imprime_cadena
     ldb #'\n
+    stb pantalla
 
-    lda #0
+    ldx #barra
+    jsr imprime_cadena
+
+    ldx #terminacion4_txt
+    jsr imprime_cadena
     ldx #cuatro.cifras
+    ldb cantidad_4cifras
+    jsr imprime_num
+    ldb #'\n
+    stb pantalla
+
+    ldx #terminacion3_txt
+    jsr imprime_cadena
+    ldx #tres.cifras
+    ldb cantidad_3cifras
+    jsr imprime_num
+    ldb #'\n
+    stb pantalla
+
+    ldx #terminacion2_txt
+    jsr imprime_cadena
+    ldx #dos.cifras
+    ldb cantidad_2cifras
+    jsr imprime_num
+    ldb #'\n
+    stb pantalla
+
+    ldx #barra
+    jsr imprime_cadena
+
+    ldx #reintegro_txt
+    jsr imprime_cadena
+    ldx #reintegro
+    ldb cantidad_reintegro
+    jsr imprime_num
+
+    ldx #barra
+    jsr imprime_cadena
+
+salir_ver_sorteo:
+    ldx #salir
+    jsr imprime_cadena
+    lda teclado
+    cmpa #'c
+    lbeq sorteo
+    cmpa #'C
+    lbeq sorteo
+    ldx #error_switch
+    jsr imprime_cadena
+    lbra salir_ver_sorteo
+
+
     
 for_4cifras:
     cmpa #2

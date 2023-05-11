@@ -11,11 +11,13 @@ pantalla 	.equ 	0xFF00
                 .globl imprime_decimal
                 .globl imprime_num
                 .globl acumulador
+                .globl barra
 
 limpia_pantalla:  .asciz  "\033[2J"
 salir:            .asciz  "\n\n\nPulse la tecla c para salir.\n"
 error_switch:     .asciz  "\33[31mOpcion incorrecta, intentelo de nuevo.\n"
 acumulador:       .byte  0
+barra:            .asciz  "==========================================================\n"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
