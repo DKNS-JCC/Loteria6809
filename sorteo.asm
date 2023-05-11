@@ -175,13 +175,13 @@ sorteo_introducir:
     cmpa #'1 ; 1. 3 primeros premios
     lbeq sorteo_introducir_3premios; Si es 1, va a sorteo_introducir_3premios
     cmpa #'2 ; 2. Terminaciones 4 cifras
-    lbeq sorteo_ver; Si es 2, va a sorteo_introducir_2
+    lbeq sorteo_introducir_4cifras; Si es 2, va a sorteo_introducir_2
     cmpa #'3 ; 3. Terminaciones 3 cifras
-    lbeq sorteo_ver; Si es 3, va a sorteo_introducir_3
+    lbeq sorteo_introducir_3cifras; Si es 3, va a sorteo_introducir_3
     cmpa #'4 ; 4. Terminaciones 2 cifras
-    lbeq sorteo_ver; Si es 4, va a sorteo_introducir_4
+    lbeq sorteo_introducir_2cifras; Si es 4, va a sorteo_introducir_4
     cmpa #'5 ; 5. Reintegros
-    lbeq sorteo_ver; Si es 5, va a sorteo_introducir_5
+    lbeq sorteo_introducir_reintegros; Si es 5, va a sorteo_introducir_5
     cmpa #'6 ; 6. Volver
     lbeq sorteo;    ; Si es 6, vuelve al menu sorteo
     ldx #error_switch
@@ -257,7 +257,7 @@ digitos2:
         ldy #primer.premio
         jsr compara_bucle
         cmpb #0
-        lbeq segundo_test
+        lbeq tercer_sorteo
         cmpb #1
         ldx #error_switch
         jsr imprime_cadena
@@ -299,36 +299,155 @@ digitos3:
         ldy #segundo.premio
         jsr compara_bucle
         cmpb #0
-        lbeq segundo_sorteo
+        lbeq segundo_test
         cmpb #1
         ldx #error_switch
         jsr imprime_cadena
         lbra sorteo_introducir_3premios
 
+segundo_test:
+        ldx #segundo.premio
+        ldy #tercer.premio
+        jsr compara_bucle
+        cmpb #0
+        lbeq fin_introducir1
+        cmpb #1
+        ldx #error_switch
+        jsr imprime_cadena
+        lbra tercer_sorteo
+
 fin_introducir1:
         lbra sorteo_introducir  ; Volvemos a sorteo_introducir
 
 sorteo_introducir_4cifras:
-    ldx #m_sorteo2
+    ldx #introducir_terminacion4_txt
     jsr imprime_cadena
-    ;;llamar a la funcion que introduce las terminaciones de 4 cifras
-    rts
+
+    ldx #cuatro.cifras
+    stx temp_sorteo
+
+
+for_intro4:
+
+        clr acumulador
+        lda #2       
+        sta acumulador
+
+intro_4cifras:
+    
+            lda #4        
+            sta cuenteo_sorteo   ; n_digitos = 4
+
+digitos4:
+
+            lda teclado         ; Cargamos el numero introducido por teclado
+            sta ,x+             ; Lo guardamos en la direccion de memoria de temp_sorteo        
+            dec cuenteo_sorteo  ; Decrementamos el contador
+            bne digitos4        ; Si el contador es distinto de 0, repetimos el bucle
+            ldx temp_sorteo     ; Cargamos la direccion de memoria de temp_sorteo en x
+            leax 5, x           ; Le sumamos 5 a x para que apunte al siguiente decimo
+            stx temp_sorteo     ; Guardamos la direccion de memoria de temp_sorteo en temp_sorteo
+            ldb #'\n            ; Cargamos el salto de linea en b
+            stb pantalla        ; Guardamos el salto de linea en pantalla
+            dec acumulador      ; Decrementamos el acumulador
+            bne intro_4cifras   ; Si el acumulador es distinto de 0, repetimos el bucle
+            jsr sorteo
 
 sorteo_introducir_3cifras:
-    ldx #m_sorteo2
+    ldx #introducir_terminacion3_txt
     jsr imprime_cadena
-    ;;llamar a la funcion que introduce las terminaciones de 3 cifras
-    rts
+
+    ldx #tres.cifras
+    stx temp_sorteo
+    lda #14      ;cantidad de premio
+
+for_intro5:
+
+        clr acumulador
+        sta acumulador
+
+intro_3cifras:
+    
+            lda #3         
+            sta cuenteo_sorteo   ; n_digitos = 3
+
+digitos5:
+
+            lda teclado         ; Cargamos el numero introducido por teclado
+            sta ,x+             ; Lo guardamos en la direccion de memoria de temp_sorteo        
+            dec cuenteo_sorteo  ; Decrementamos el contador
+            bne digitos5        ; Si el contador es distinto de 0, repetimos el bucle
+            ldx temp_sorteo     ; Cargamos la direccion de memoria de temp_sorteo en x
+            leax 4, x           ; Le sumamos 4 a x para que apunte al siguiente decimo
+            stx temp_sorteo     ; Guardamos la direccion de memoria de temp_sorteo en temp_sorteo
+            ldb #'\n            ; Cargamos el salto de linea en b
+            stb pantalla        ; Guardamos el salto de linea en pantalla
+            dec acumulador      ; Decrementamos el acumulador
+            bne intro_3cifras   ; Si el acumulador es distinto de 0, repetimos el bucle
+            jsr sorteo_introducir
 
 sorteo_introducir_2cifras:
-    ldx #m_sorteo2
+    ldx #introducir_terminacion2_txt
     jsr imprime_cadena
-    ;;llamar a la funcion que introduce las terminaciones de 2 cifras
-    rts
+
+    ldx #dos.cifras
+    stx temp_sorteo
+    lda #14      ;cantidad de premio
+
+for_intro6:
+
+        clr acumulador
+        sta acumulador
+
+intro_2cifras:
+    
+            lda #2        ; 2 numeros por decimo
+            sta cuenteo_sorteo   ; n_digitos = 2
+
+digitos6:
+    
+                lda teclado ; Cargamos el numero introducido por teclado
+                sta ,x+     ; Lo guardamos en la direccion de memoria de temp_sorteo        
+                dec cuenteo_sorteo ; Decrementamos el contador
+                bne digitos6 ; Si el contador es distinto de 0, repetimos el bucle
+                ldx temp_sorteo    ; Cargamos la direccion de memoria de temp_sorteo en x
+                leax 3, x   ; Le sumamos 3 a x para que apunte al siguiente decimo
+                stx temp_sorteo    ; Guardamos la direccion de memoria de temp_sorteo en temp_sorteo
+                ldb #'\n        ; Cargamos el salto de linea en b
+                stb pantalla    ; Guardamos el salto de linea en pantalla
+                dec acumulador      ; Decrementamos el acumulador
+                bne intro_2cifras   ; Si el acumulador es distinto de 0, repetimos el bucle
+                jsr sorteo_introducir
 
 sorteo_introducir_reintegros:
-    ldx #m_sorteo2
+    ldx #introducir_reintegro_txt
     jsr imprime_cadena
-    ;;llamar a la funcion que introduce los reintegros
-    rts
+
+    ldx #reintegro
+    stx temp_sorteo
+    lda #3      ;cantidad de premio
+
+for_intro7:
+
+        clr acumulador
+        sta acumulador
+
+intro_reintegro:
     
+            lda #1        ; 1 numeros por decimo
+            sta cuenteo_sorteo   ; n_digitos = 1
+
+digitos7:
+    
+                lda teclado ; Cargamos el numero introducido por teclado
+                sta ,x+     ; Lo guardamos en la direccion de memoria de temp_sorteo        
+                dec cuenteo_sorteo ; Decrementamos el contador
+                bne digitos7 ; Si el contador es distinto de 0, repetimos el bucle
+                ldx temp_sorteo    ; Cargamos la direccion de memoria de temp_sorteo en x
+                leax 2, x   ; Le sumamos 2 a x para que apunte al siguiente decimo
+                stx temp_sorteo    ; Guardamos la direccion de memoria de temp_sorteo en temp_sorteo
+                ldb #'\n        ; Cargamos el salto de linea en b
+                stb pantalla    ; Guardamos el salto de linea en pantalla
+                dec acumulador      ; Decrementamos el acumulador
+                bne intro_reintegro   ; Si el acumulador es distinto de 0, repetimos el bucle
+                jsr sorteo_introducir
