@@ -53,20 +53,24 @@ terminaciones_tres:	.asciz "949"
 			.asciz "815"
 			.asciz "112"
 			.asciz "296"
+
 terminaciones_dos:	.asciz "01"
 			.asciz "93"
 			.asciz "00"
 			.asciz "18"
 			.asciz "42"
+
 reintegros:	.asciz "3"
 		.asciz "5"
 		.asciz "0"
+
 menu:   .ascii "\nSORTEO DE LOTERIA\n"
 	.ascii "\nSELECCIONE UNA OPCION:\n"
 	.ascii "1) DECIMOS\n"
 	.ascii "2) SORTEO\n"
 	.ascii "3) COMPROBAR\n"
 	.asciz "4) SALIR\n"
+
 menu_decimos: 	.ascii "\nSELECCIONE UNA OPCION:\n"
 		.ascii "1) VER\n"
 		.ascii "2) INTRODUCIR\n"
@@ -103,6 +107,7 @@ reintegros_texto: .asciz "Reintegros:\n"
 .globl comparar_numeros
 .globl comparar_premios_decimo
 .globl introducir_multiples_terminaciones
+
 programa:
 lds #0xFF00
 
@@ -194,10 +199,10 @@ introducir_reintegros:
 	lbra introducir_reintegros_f
 
 ver_decimos: 
-	lda #10
+	lda #'\n
 	sta pantalla
+	
 	ldx #decimos
-	lda #1
 	ldb num_decimos
 	jsr imprimir_numeros
 	lbra elegir_opcion_decimos

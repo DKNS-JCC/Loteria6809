@@ -36,7 +36,7 @@ rts
 
 
 ;imprimir_numeros
-;	imprime por pantalla numeros como cadenas de caracteres
+;imprime por pantalla numeros como cadenas de caracteres
 ;entrada: x direccion primer numero, b numero de iteraciones, a empieza a 0 para inciar
 ;salida: ninguna
 ;registros afectados: x, a, b

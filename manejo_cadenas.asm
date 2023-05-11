@@ -9,10 +9,13 @@ pantalla 	.equ 	0xFF00
                 .globl error_switch
                 .globl salir
                 .globl imprime_decimal
+                .globl imprime_num
+                .globl acumulador
 
 limpia_pantalla:  .asciz  "\033[2J"
 salir:            .asciz  "\n\n\nPulse la tecla c para salir.\n"
 error_switch:     .asciz  "\33[31mOpcion incorrecta, intentelo de nuevo.\n"
+acumulador:       .byte  0
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -109,6 +112,33 @@ id_quinta_cifra:
     addb #'0                        ;suma 0 a B
     stb  pantalla                   ;imprime el valor de B en pantalla
     puls x
+    rts
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; imprime_entero                                                  ;
+; saca por la pantalla el entero contenido en X                   ;
+;                                                                 ;
+; Entrada: X-valor a imprimir                                     ;
+; Salida: pantalla                                                ;
+; Registros afectados: X, CC.                                     ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+imprime_num:
+
+	stb acumulador
+    lda #1
+
+num_sig:
+
+	leax ,x+        
+	jsr imprime_cadena
+	ldb #'\n
+	stb pantalla
+	cmpa acumulador
+	beq num_fin
+	inca
+	bra num_sig
+
+num_fin:
     rts
 
 
