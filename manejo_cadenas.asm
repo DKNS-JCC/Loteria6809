@@ -12,6 +12,7 @@ pantalla 	.equ 	0xFF00
                 .globl imprime_num
                 .globl acumulador
                 .globl barra
+                .globl compara_bucle
 
 limpia_pantalla:  .asciz  "\033[2J"
 salir:            .asciz  "\n\n\nPulse la tecla c para salir.\n"
@@ -142,6 +143,35 @@ num_sig:
 
 num_fin:
     rts
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;comparacion de 2 numeros                                                                                              ;
+; compara lso numeros de los registros X e Y y da un valor de retorno                                                  ;
+;                                                                                                                      ;       
+; Entrada: X-direcciOn de comienzo de la cadena                                                                        ;
+; Salida: b con un valor de retorno                                                                                    ;   
+; Registros afectados: X, A, B, Y.                                                                                     ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+compara_bucle:
+	lda     ,x+
+	beq     compara_IGUAL
+	cmpa    ,y+
+	beq     compara_bucle
+compara_DISTINTO:
+	ldb     #0
+	bra     compara_fin
+
+compara_IGUAL:
+	ldb    #1
+        bra    compara_fin
+compara_fin:
+        rts
+		
+
+
+
+
+
 
 
 

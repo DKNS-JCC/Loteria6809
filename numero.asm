@@ -24,7 +24,6 @@ cantidad_reintegro:     .byte 3
 primer.premio:
         .asciz "89603"
 segundo.premio:
-
         .asciz "72289"
 tercer.premio:
         .asciz "18918"

@@ -1,6 +1,8 @@
        .module comparaciones_prueba
        pantalla     .equ   0xFF00
        teclado      .equ   0xFF02
+
+        
                     
 ;Premios por categoria
 primer_5cifras: .asciz "Primer premio de 5 cifras equivale a 1000 puntos\n"
@@ -34,6 +36,7 @@ numeros.reintegro:      .byte   3
                 .globl  reintegro
                 .globl  imprime_cadena
                 .globl  programa_comparaciones
+                .globl  compara_bucle
 
 
 programa_comparaciones:
@@ -180,27 +183,5 @@ programa_comparaciones:
         jsr     imprime_cadena
         jsr     programa_comparaciones
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;comparacion de 2 numeros                                                                                              ;
-; compara lso numeros de los registros X e Y y da un valor de retorno                                                  ;
-;                                                                                                                      ;       
-; Entrada: X-direcciOn de comienzo de la cadena                                                                        ;
-; Salida: b con un valor de retorno                                                                                    ;   
-; Registros afectados: X, A, B, Y.                                                                                     ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-compara_bucle:
-	lda     ,x+
-	beq     compara_IGUAL
-	cmpa    ,y+
-	beq     compara_bucle
-compara_DISTINTO:
-	ldb     #0
-	bra     compara_fin
 
-compara_IGUAL:
-	ldb    #1
-        bra    compara_fin
-compara_fin:
-        rts
-		
 
