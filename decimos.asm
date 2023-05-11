@@ -1,5 +1,5 @@
                 
-                .module decimos
+.module decimos
 
 fin     	.equ 	0xFF01
 teclado		.equ	0xFF02
@@ -14,6 +14,8 @@ pantalla 	.equ 	0xFF00
 
                 .globl valor_decimos
                 .globl decimos
+var1: .byte 0
+var2: .byte 0
 
 m_decimos:      .ascii  "\n\33[32m=========DECIMOS==========\n"
                 .ascii  "\33[33m1. Ver\n"
@@ -101,8 +103,21 @@ decimos_introducir:
     jsr imprime_cadena
     ldx #txtintroducirdecimos
     jsr imprime_cadena
+
     lda teclado
-    sta decimos_NUM
+    suba #'0
+    sta var1
+    lda teclado
+    suba #'0
+    sta var2
+
+    ldb #10
+    lda var1
+    mul
+    addb var2
+
+    stb decimos_NUM
+    
     ldx #valor_decimos
     stx temp
 
@@ -145,5 +160,3 @@ fin_introducir:
         ldx #error_switch
         jsr imprime_cadena
         bra fin_introducir
-
-
