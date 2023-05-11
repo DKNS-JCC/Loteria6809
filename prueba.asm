@@ -1,10 +1,21 @@
               .module comprobar
-      .globl imprime_cadena
-      .globl imprimir_numeros
-      .globl imprimir_decimal
-      .globl compara_bucle
-      .globl comparacion_decimos
-      .globl introducir_multiples_terminaciones
+      	.globl imprime_cadena
+      	.globl imprime_num
+      	.globl imprime_decimal
+      	.globl compara_bucle
+      	.globl comparacion_decimos
+	  	.globl compara_bucle
+	  	.globl  primer.premio
+     	.globl  segundo.premio
+      	.globl  tercer.premio
+      	.globl  cuatro.cifras
+    	.globl  tres.cifras
+    	.globl  dos.cifras
+       	.globl  reintegro
+	   	.globl comparaciones
+		.globl valor_decimos
+		.globl decimos_NUM
+		.globl programa
 
 fin         .equ 0xFF01
 teclado      .equ 0xFF02
@@ -24,14 +35,55 @@ cifras3: .asciz "TE3\t"
 cifras2: .asciz "TE2\t"
 cifra1: .asciz "REI\t"  
 
+tabla: .ascii "Decimo  1ER\t2ND\t3RD\tTE4\tTE3\tTE2\tREI\tTotal\n"
+		 .asciz "=====================================================================\n"
+
+comparaciones:
+	lda #10 
+	sta pantalla
+	ldx #tabla
+	jsr imprime_cadena
+	ldb #0
+	ldx #valor_decimos
+	decimos0:
+	pshs x
+	jsr imprime_cadena
+	puls x
+	lda #9
+	sta pantalla
+	pshs b	
+	ldy #reintegro
+	pshs y
+	ldy #dos.cifras
+	pshs y
+	ldy #tres.cifras
+	pshs y
+	ldy #cuatro.cifras
+	pshs y
+	ldy #tercer.premio
+	pshs y
+	ldy #segundo.premio
+	pshs y
+	ldy #primer.premio
+	pshs y
+	jsr comparacion_decimos
+	ldb #6
+	ABX
+	puls b
+	incb
+	cmpb decimos_NUM
+	blo decimos0
+	
 
 
-;comparacion_decimos
-;comparar un decimos con todos los premios y mostrar los puntos obtenidos
-;entrada x direccion decimo
-;salida ninguna
-;registros afectados a,b,y,x
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;comparacion_decimos                                                                                      ;
+; compara todos los decimos con todos los boletos y terinaciones premiados                                 ;
+; entrada: X direccion decimo
+; salida: Ninguna
+; registros afectados: A,B,Y,X
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;,;;;;;
 comparacion_decimos:
 	    ldd     #0
 	    std     puntuaje_total
@@ -50,7 +102,7 @@ comparacion_decimos:
               primer_igual:
 	            pshs    x
 	            ldx     #primer_5cifras
-	            jsr     imprimie_cadena
+	            jsr     imprime_cadena
 	            puls    x
 	            ldd     #1000
 	            std     puntuaje_total
@@ -59,7 +111,7 @@ comparacion_decimos:
 	    lda     #0
 	    puls    y
 	    pshs    x
-	    jsr     comparar_numeros
+	    jsr     compara_bucle
 	    puls    x
 	    cmpb    #1
 	    beq     igual_segundo
@@ -105,7 +157,7 @@ comparacion_decimos:
 		          cmpb    #2
 		          beq     distinto_4cifras
 		          pshs    x
-		          jsr     comparar_numeros
+		          jsr     compara_bucle
 		          puls    x
 		          cmpb    #1
 		          beq     igual_4cifras
@@ -169,7 +221,7 @@ comparacion_decimos:
 		          cmpb    #5
 		          beq     distinto_2cifras
 		          pshs    x
-		          jsr     comparar_numeros
+		          jsr     compara_bucle
 		          puls    x
 		          cmpb    #1
 		          beq     igual_2cifras
@@ -196,7 +248,7 @@ comparacion_decimos:
 	    ldb     #0
 	    stb     acumulado
 	    puls    y
-	            bucle_reintegros:
+	            bucle_una_n:
 		          ldb     acumulado
 		          cmpb    #3
 		          beq     distinto_1cifras
@@ -204,13 +256,13 @@ comparacion_decimos:
 		          jsr     compara_bucle
 		          puls    x
 		          cmpb    #1
-		          beq     bucle_fin_igual_reintegros
+		          beq     igual_1cifras
 		          leay    ,y+
 		          ldb     acumulado
 		          incb
 		          stb     acumulado
-		          bra     bucle_reintegros
-              bucle_fin_igual_reintegros:
+		          bra     bucle_una_n
+              igual_1cifras:
 	            pshs    x
 	            ldx     #cifra1
 	            jsr     imprime_cadena
@@ -223,34 +275,12 @@ comparacion_decimos:
 	            lda     #9
 	            sta     pantalla	
 
-      temina:
+      termina:
 	    ldd     puntuaje_total
-	    jsr     imprimir_decimal
+	    jsr     imprime_decimal
 	    lda     #10
 	    sta     pantalla
 	    ldy     return
 	    pshs    y
-      rts
+      	rts
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;comparacion de 2 numeros                                                                                              ;
-; compara lso numeros de los registros X e Y y da un valor de retorno                                                  ;
-;                                                                                                                      ;       
-; Entrada: X-direcciOn de comienzo de la cadena                                                                        ;
-; Salida: b con un valor de retorno                                                                                    ;   
-; Registros afectados: X, A, B, Y.                                                                                     ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-compara_bucle:
-	lda     ,x+
-	beq     compara_IGUAL           ;para si llega a final de linea
-	cmpa    ,y+
-	beq     compara_bucle
-compara_DISTINTO:
-	ldb     #0
-	bra     compara_fin
-
-compara_IGUAL:
-	ldb    #1
-        bra    compara_fin
-compara_fin:
-        rts
