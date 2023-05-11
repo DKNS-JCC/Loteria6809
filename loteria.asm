@@ -10,10 +10,10 @@ pantalla 	.equ 	0xFF00
             .globl programa
             .globl imprime_cadena
             .globl decimos
-            .globl sorteo
+            ;.globl sorteo
             .globl limpia_pantalla
             .globl error_switch
-            ;.globl programa_comparaciones
+            .globl comparaciones
 			; Inicio declaración de variables
 
 
@@ -68,10 +68,10 @@ decimos_j:
     jsr decimos
     
 sorteo_j:
-    jsr sorteo
+    ;jsr sorteo
 
 comprobar_j:
-    ;jsr programa_comparaciones
+    jsr comparaciones
 
 acabar: 	clra
 	sta 	fin
